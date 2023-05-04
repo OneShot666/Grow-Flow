@@ -8,11 +8,10 @@ import pygame
 import sys
 
 
-# !! [0.2.5] Modifier vitesse player en diagonale
 # ! [0.2.5] Replace red.mp3 (music)
 # ! [0.2.5] Replace orange.mp3 & green.mp3 ?
-# ! [0.2.5] Make SoundManager() work
-# ! [later: 0.5.0] Add move player (avec souris) + centrer camera
+# !! [0.2.5] Make SoundManager() work
+# ! [later: 0.5.0] Add move player (avec souris) + centrer camera : check !
 # ! [later: 0.5.0] Add spawn cells (food) + grow player (food_counter: level)
 # ! [later: 0.5.0] Add change background & music avec fleches et souris
 # ! [later: 0.5.0] Add condition pour accéder aux autres musiques / level (taille)
@@ -28,7 +27,7 @@ class Game:                                                                     
         self.running = True
         self.game_name = "Grow Flow"
         self.creator = "One Shot"
-        self.version = "v0.2.1"
+        self.version = "v0.2.2"
         print(f"Bienvenue sur {self.game_name} ! ({self.version})\n")
         pygame.display.set_caption(self.game_name)                              # Lector name
         self.icon = pygame.image.load("images/icon.png")                        # Game icon
@@ -115,15 +114,11 @@ class Game:                                                                     
                     if event.key == pygame.K_SPACE:                             # ! [later] Replace by auto change level
                         self.ChangeLevel()
 
+                    if event.key == pygame.K_c:
+                        self.player.ChangeMovementMethod()
+
             self.pressed = pygame.key.get_pressed()
-            if self.pressed[pygame.K_UP]:                                       # Player movements (with arrows)
-                self.player.Move("up", self.current_size)
-            elif self.pressed[pygame.K_DOWN]:
-                self.player.Move("down", self.current_size)
-            if self.pressed[pygame.K_LEFT]:
-                self.player.Move("left", self.current_size)
-            elif self.pressed[pygame.K_RIGHT]:
-                self.player.Move("right", self.current_size)
+            self.player.MovementManager(self.current_size, self.pressed)
 
             if self.pressed[pygame.K_LCTRL]:
                 self.time_now = time()

@@ -1,35 +1,85 @@
 import pygame
-import pygame_gui
+import math
 
+# Initialisation de Pygame
 pygame.init()
 
-width, height = 640, 480
-window = pygame.display.set_mode((width, height))
-pygame.display.set_caption('Resizable Window Example')
+# Dimensions de la fenêtre
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 600
 
-manager = pygame_gui.UIManager((width, height))
-button = pygame_gui.elements.UIButton(relative_rect=pygame.Rect((0, 0), (100, 50)), text='Click me!', manager=manager)
+# Couleurs
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
 
+# Création de la fenêtre
+screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 clock = pygame.time.Clock()
 
-is_running = True
-while is_running:
-    time_delta = clock.tick(60) / 1000.0
 
+# Classe du personnage
+class Player(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((30, 30))
+        self.image.fill(WHITE)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.speed = 5
+
+    def update(self, keys):
+        # Vecteurs de déplacement
+        x_dir = 0
+        y_dir = 0
+
+        # Gestion des touches enfoncées
+        if keys[pygame.K_LEFT]:
+            x_dir -= 1
+        if keys[pygame.K_RIGHT]:
+            x_dir += 1
+        if keys[pygame.K_UP]:
+            y_dir -= 1
+        if keys[pygame.K_DOWN]:
+            y_dir += 1
+
+        # Calcul de la distance à parcourir
+        distance = math.sqrt(x_dir ** 2 + y_dir ** 2)
+        if distance != 0:
+            # Calcul de la direction de déplacement
+            x_dir /= distance
+            y_dir /= distance
+
+            # Mise à jour de la position
+            self.rect.x += x_dir * self.speed
+            self.rect.y += y_dir * self.speed
+
+
+# Création du joueur
+player = Player(WINDOW_WIDTH // 2, WINDOW_HEIGHT // 2)
+
+# Liste des sprites
+all_sprites = pygame.sprite.Group()
+all_sprites.add(player)
+
+# Boucle de jeu
+running = True
+while running:
+    # Gestion des événements
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            is_running = False
-        if event.type == pygame.USEREVENT:
-            if event.user_type == pygame_gui.UI_BUTTON_PRESSED:
-                if event.ui_element == button:
-                    print('Button pressed!')
+            running = False
 
-        manager.process_events(event)
+    # Gestion des touches enfoncées
+    keys = pygame.key.get_pressed()
 
-    manager.update(time_delta)
-    window_surface = pygame.display.get_surface()
-    window_surface.fill(pygame.Color('#000000'))
-    manager.draw_ui(window_surface)
-    pygame.display.update()
+    # Mise à jour des sprites
+    all_sprites.update(keys)
 
+    # Affichage
+    screen.fill(BLACK)
+    all_sprites.draw(screen)
+    pygame.display.flip()
+    clock.tick(50)
+
+# Fermeture de Pygame
 pygame.quit()
