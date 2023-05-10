@@ -8,7 +8,7 @@ class Player:
     def __init__(self, name="Player", size=None, screen_size=None, position=None, length=1, speed=20, color=(255, 255, 255),
                  color_name="white"):
         self.Methods = ["mouse", "keyboard"]
-        self.move_method = self.Methods[0]
+        self.move_method = self.Methods[0]                                      # Mouse movement by default
         self.name = name
         self.size = [100, 100] if size is None else size
         self.screen_size = self.set_screen_size() if screen_size is None else screen_size
@@ -48,29 +48,34 @@ class Player:
             screen_size = self.screen_size
 
         if self.move_method == self.Methods[0]:
-            self.MoveWithMouse()
+            self.MoveWithMouse(screen_size)
         elif self.move_method == self.Methods[1]:
             self.MoveWithKeyboard(pressed)
 
         self.CheckScreenCollision(screen_size)
 
-    def MoveWithMouse(self):
-        mouse_x, mouse_y = pygame.mouse.get_pos()
-        goal_x = mouse_x - self.size[0] // 2
-        goal_y = mouse_y - self.size[1] // 2
-        # Calcul de la distance en x et y entre le joueur et la position de la souris
-        dx = goal_x - self.pos_x
-        dy = goal_y - self.pos_y
-        distance = max(abs(dx), abs(dy))
+    def MoveWithMouse(self, screen_size=None, goal_pos=None):                   # Go to the mouse position
+        if screen_size is None:
+            screen_size = self.screen_size
+        if goal_pos is None:
+            goal_pos = pygame.mouse.get_pos()
 
-        if distance <= self.speed:                                              # Si dépasse objectif, va directement dessus
-            self.pos_x = goal_x
-            self.pos_y = goal_y
-        else:                                                                   # Sinon, va vers souris
-            direction_x = dx / distance
-            direction_y = dy / distance
-            self.pos_x += direction_x * self.speed
-            self.pos_y += direction_y * self.speed
+        if 0 <= goal_pos[0] <= screen_size[0] and 0 <= goal_pos[1] <= screen_size[1]:   # Si souris dans fenetre
+            goal_x = goal_pos[0] - self.size[0] // 2
+            goal_y = goal_pos[1] - self.size[1] // 2
+
+            dx = goal_x - self.pos_x                                            # Calcul distance entre joueur et souris
+            dy = goal_y - self.pos_y
+            distance = max(abs(dx), abs(dy))
+
+            if distance <= self.speed:                                          # Si assez proche, va directement dessus
+                self.pos_x = goal_x
+                self.pos_y = goal_y
+            else:                                                               # Sinon, va vers souris
+                direction_x = dx / distance
+                direction_y = dy / distance
+                self.pos_x += direction_x * self.speed
+                self.pos_y += direction_y * self.speed
 
     def MoveWithKeyboard(self, pressed=None):
         dir_x = 0
