@@ -36,6 +36,8 @@ class Game:                                                                     
         self.game_name = "Grow Flow"
         self.creator = "One Shot"
         self.version = "v0.2.5"
+        self.description = "A relaxing underwater fantasy game where you play as a small water creature. " \
+                           "Grow by feeding on the cells and smaller creatures around you and discover the world of Grow Flow."
         print(f"Bienvenue sur {self.game_name} ! ({self.version})\n")
         pygame.display.set_caption(self.game_name)                              # Lector name
         self.icon = pygame.image.load("images/icon.png")                        # Game icon
