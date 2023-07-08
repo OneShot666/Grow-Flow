@@ -1,0 +1,4 @@
+v0.0.1
+
+- Créer les différents programmes
+- Créer les fonctionnalités basiques du jeu

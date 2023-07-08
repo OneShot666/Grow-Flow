@@ -1,0 +1,5 @@
+v0.3.0
+
+- Afficher les différentes bulles
+- Ajouter les fonctions pour les versions futures
+- Ajouter de la musique

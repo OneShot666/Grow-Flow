@@ -1,0 +1,5 @@
+v0.1.0
+
+- Afficher une fenetre
+- Ajouter une barre de pv et une barre de cellules au joueur
+- Choisir la couleur du joueur

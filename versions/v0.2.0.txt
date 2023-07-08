@@ -1,0 +1,5 @@
+v0.2.0
+
+- Trouver les images de bases du jeu
+- Trouver la plupart des sons du jeu
+- Ajouter les classes pour les ennemis et les bulles de vie
