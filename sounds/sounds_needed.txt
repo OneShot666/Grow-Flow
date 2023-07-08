@@ -1,0 +1,16 @@
+Sounds needed:
+
+- bubbles (collected)
+- bubbles (move)
+- background (water)
+- background (whales or else)
+- player (attack)
+- player (die)
+- player (fast  in water)
+- player (slow in water)
+- player (take damage)
+- player (upgrade level)
+- enemies (attack)
+- enemies (die)
+- enemies (move)
+- enemies (take damage)
