@@ -4,25 +4,30 @@ from random import *
 import pygame
 
 
-# ! Add draw() here ? (+ blur effets ?) + make it one image
+# ! Add blur effets ? (make it one image)
 class Bubble(pygame.sprite.Sprite):
     def __init__(self, x=0, y=0, map_borders=None, size=16, color=(250, 240, 210), speed=5, *groups):
         super().__init__(*groups)
         self.show_dir = False
         self.group = groups
         self.map_borders = self.set_map_borders() if map_borders is None else map_borders
-        self.diameter = size
-        self.radius = size // 2
-        self.membrane_width = int(self.diameter * 0.1)                          # Largeur du bord de l'anneau
         self.speed = speed
+
+        self.diameter = size
+        self.radius = int(size * 0.5)
+        self.current_radius = int(size * 0.25)
+        self.current_diameter = self.current_radius * 2
         self.dir_x = randint(-self.speed, self.speed)
         self.dir_y = randint(-self.speed, self.speed)
+
         self.transparence = 176
         self.transparence_border = self.transparence + 40
         self.transparence_reflect = self.transparence - 40
         self.color = (*color, self.transparence)
         self.color_border = self.set_color_border()
         self.color_reflect = self.set_color_reflect()
+
+        self.membrane_width = int(self.diameter * 0.1)                          # Largeur du bord de l'anneau
         self.image = None
         self.reflect_surface = None
         self.set_image()
@@ -73,7 +78,7 @@ class Bubble(pygame.sprite.Sprite):
 
     def update(self, circles):                                                  # Need to be lower to work in main
         self.Move()
-        self.CheckBubbleCollision(circles)
+        self.CheckCirclesCollision(circles)
         self.CheckBordersCollision()
 
     def Move(self):                                                             # Random bubble movements (upgrade later)
@@ -82,7 +87,7 @@ class Bubble(pygame.sprite.Sprite):
         self.rect.x += self.dir_x
         self.rect.y += self.dir_y
 
-    def CheckBubbleCollision(self, circles=None):
+    def CheckCirclesCollision(self, circles=None):
         if circles is None:
             circles = []
 
@@ -120,7 +125,7 @@ class Bubble(pygame.sprite.Sprite):
 
 
 class LifeBubble(Bubble):
-    def __init__(self, x=0, y=0, map_borders=None, size=24, color=(120, 250, 30), life_gain=25, speed=2, *groups):
+    def __init__(self, x=0, y=0, map_borders=None, size=24, color=(120, 250, 30), life_gain=20, speed=2, *groups):
         super().__init__(x, y, map_borders, size, color, speed, *groups)
         self.rect.x = self.set_position_x() if x == 0 else x
         self.rect.y = self.set_position_y() if y == 0 else y

@@ -4,21 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d392ac45-d9f0-491a-a223-9911601341b8" name="Changes" comment="Version v0.2.5">
-      <change afterPath="$PROJECT_DIR$/bubble.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/perso.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/player1.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sounds/sounds_needed.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test3.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+    <list default="true" id="d392ac45-d9f0-491a-a223-9911601341b8" name="Changes" comment="Version v0.4.5">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Frow-Glow" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/player.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/player.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/level.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bubble.py" beforeDir="false" afterPath="$PROJECT_DIR$/bubble.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/player.py" beforeDir="false" afterPath="$PROJECT_DIR$/player.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/testception.py" beforeDir="false" afterPath="$PROJECT_DIR$/testception.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -277,14 +267,42 @@
       <option name="project" value="LOCAL" />
       <updated>1683762211044</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Version v0.4.5">
+      <option name="closed" value="true" />
+      <created>1688792113191</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1688792113191</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Version v0.4.5">
+      <option name="closed" value="true" />
+      <created>1688792130007</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1688792130007</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="second commit" />
     <MESSAGE value="Early version v0.2.5" />
     <MESSAGE value="Version v0.2.5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Version v0.2.5" />
+    <MESSAGE value="Version v0.4.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="Version v0.4.5" />
   </component>
 </project>

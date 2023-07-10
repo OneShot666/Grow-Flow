@@ -20,14 +20,14 @@ Colors = [(234, 48, 39), (254, 156, 39), (242, 242, 34), (169, 252, 41), (41, 23
 class Bubble(pygame.sprite.Sprite):
     def __init__(self, x=None, y=None, size=None, dx=None, dy=None, color=None, show_dir=False, *groups):
         super().__init__(*groups)
-        max_size = 50
+        max_size = 100
         self.show_dir = show_dir
         self.diameter = size if size is not None else randint(int(max_size * 0.25), max_size)
         self.radius = int(self.diameter * 0.5)
         self.pos_x = x if x is not None else randint(self.radius, window_width - self.diameter)
         self.pos_y = y if y is not None else randint(self.radius, window_height - self.diameter)
-        self.direction_x = dx if dx is not None else choice([-1, 1]) * randint(1, 3)
-        self.direction_y = dy if dy is not None else choice([-1, 1]) * randint(1, 3)
+        self.dir_x = dx if dx is not None else choice([-1, 1]) * randint(1, 3)
+        self.dir_y = dy if dy is not None else choice([-1, 1]) * randint(1, 3)
         self.border_width = int(self.diameter * 0.05)
         # Colors
         self.color_transparent = 160
@@ -80,8 +80,8 @@ class Bubble(pygame.sprite.Sprite):
 
     @staticmethod
     def get_min_distance(circle1, circle2):
-        dx = (circle2.pos_x + circle2.direction_x) - (circle1.pos_x + circle1.direction_x)          # Calcule future pos
-        dy = (circle2.pos_y + circle2.direction_y) - (circle1.pos_y + circle1.direction_y)
+        dx = (circle2.pos_x + circle2.dir_x) - (circle1.pos_x + circle1.dir_x)          # Calcule future pos
+        dy = (circle2.pos_y + circle2.dir_y) - (circle1.pos_y + circle1.dir_y)
         return sqrt(dx ** 2 + dy ** 2) - circle1.radius - circle2.radius
 
     def update(self, circles=None):
@@ -107,13 +107,13 @@ class Bubble(pygame.sprite.Sprite):
                     circle.check_screen_collision()
 
         # Met à jour la position
-        self.pos_x += self.direction_x
-        self.pos_y += self.direction_y
+        self.pos_x += self.dir_x
+        self.pos_y += self.dir_y
         self.check_screen_collision()
 
     def check_screen_collision(self):                                           # Vérifie collisions avec bords de l'écran
-        self.direction_x = 1 if self.pos_x - self.radius < 0 else -1 if self.pos_x + self.radius > window_width else self.direction_x
-        self.direction_y = 1 if self.pos_y - self.radius < 0 else -1 if self.pos_y + self.radius > window_height else self.direction_y
+        self.dir_x = 1 if self.pos_x - self.radius < 0 else -1 if self.pos_x + self.radius > window_width else self.dir_x
+        self.dir_y = 1 if self.pos_y - self.radius < 0 else -1 if self.pos_y + self.radius > window_height else self.dir_y
 
     def draw(self):
         screen.blit(self.bubble_surface, (self.pos_x - self.radius, self.pos_y - self.radius))
@@ -125,7 +125,7 @@ class Bubble(pygame.sprite.Sprite):
             percent_gap_circle = 1.5
             percent_arrow_width = 0.15
             percent_arrow_height = 2
-            angle = atan2(self.direction_y, self.direction_x)                       # Direction cercle (en radian)
+            angle = atan2(self.dir_y, self.dir_x)                       # Direction cercle (en radian)
             line_start = (self.pos_x + self.radius * 0.8 * cos(angle), self.pos_y + self.radius * 0.8 * sin(angle))
             line_end = (self.pos_x + self.radius * percent_gap_circle * cos(angle), self.pos_y + self.radius * percent_gap_circle * sin(angle))
             pygame.draw.line(screen, self.arrow_color, line_start, line_end, int(self.radius // 10))    # Tige flèche

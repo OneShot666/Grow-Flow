@@ -10,11 +10,8 @@ import pygame
 import sys
 
 
-# ! [later: 0.5.0] Add centrer camera sur player [check]
-# ! [later: 0.5.0] Add function grow player (food_counter: level)
-# ! [later: 0.5.0] Add condition pour accéder aux autres musiques / level (taille)
-# ! [later: 0.5.0] Add eaten cells move in player (max increase with size / lenght ?)
-# ! [later: 1.0.0] Add enemies + dégâts + bulle de vie [semi-check]
+# ! [later: 1.0.0] Add sounds + équilibrage
+# ! [later: 1.0.0] Add eaten cells move in player (max increase with size / length ?)
 # ! [later: 1.0.0] Add saves + ask name player + display name
 # ! [later: 1.0.0] Add comms en anglais + documentation
 # ! [later: 1.5.0] Add effects (flou, rayons, bulles, creatures au fond ?)
@@ -39,7 +36,7 @@ class Game:                                                                     
         # Game data
         self.game_name = "Grow Flow"
         self.creator = "One Shot"
-        self.version = "v0.4.5"
+        self.version = "v0.5.0"
         self.description = "A relaxing underwater fantasy game where you play as a small water creature. " \
                            "Grow by feeding on the cells and smaller creatures around you and discover the world of Grow Flow."
         print(f"Bienvenue sur {self.game_name} ! ({self.version})\n")
@@ -116,7 +113,7 @@ class Game:                                                                     
         self.map_borders_color = (222, 222, 222)
         self.map_borders = None                                                 # Store surface to display
         # Player data
-        self.player = Player()
+        self.player = None
         self.player_home_position = None
         self.player_body = None                                                 # !! Unused (yet ?)
         self.player_life_bar_height = 10
@@ -124,11 +121,11 @@ class Game:                                                                     
         self.player_cell_bar_height = 5
         self.player_cell_bar_width_percent = 0.4
         # Bubbles data
-        self.eaten_life_bubbles = 0
-        self.eaten_enemies = 0
         self.Cells = pygame.sprite.Group()
         self.Life_bubbles = pygame.sprite.Group()
         self.Enemies = pygame.sprite.Group()
+        self.nb_life_bubbles_max = 0
+        self.nb_enemies_max = 0
         # Main functions
         self.LoadComposants()                                                   # Set most of None variables
         self.Run()
@@ -153,9 +150,9 @@ class Game:                                                                     
         self.background_image = pygame.transform.scale(self.background_image, self.map_size)
         self.background_size = [self.map_size[0] + self.screen_size[0], self.map_size[1] + self.screen_size[1]]
         self.set_background()
-        self.player = Player(map_borders=self.map_borders_pos, bg_size=self.background_size)
         self.song_name = f"musics/{self.color_name_bg}.mp3"
         self.LoadMapBorders()
+        self.player = Player(map_borders=self.map_borders_pos)
         self.LoadBubbles()
         self.LoadArtefacts()
         end_load_time = time()
@@ -207,15 +204,15 @@ class Game:                                                                     
             self.Cells.add(Bubble(map_borders=self.map_borders_pos))
         self.player.set_cells_eaten_max(len(self.Cells))
 
-        self.eaten_life_bubbles = 0
         self.Life_bubbles.empty()
         for _ in range(self.Levels[self.level_index].nb_life_max):
             self.Life_bubbles.add(LifeBubble(map_borders=self.map_borders_pos))
+        self.nb_life_bubbles_max = len(self.Life_bubbles)
 
-        self.eaten_enemies = 0
         self.Enemies.empty()
         for _ in range(self.Levels[self.level_index].nb_enemy_max):
             self.Enemies.add(Enemy(map_borders=self.map_borders_pos))
+        self.nb_enemies_max = len(self.Enemies)
         print(f"Chargement des bulles terminé !")
 
     @staticmethod
@@ -236,11 +233,6 @@ class Game:                                                                     
                         self.ChangePausing()
 
                     if not self.pausing:                                        # If game not paused
-                        if event.key == pygame.K_LEFT:                          # Change the level (precedent)
-                            self.ChangeLevel(-1)
-                        if event.key == pygame.K_RIGHT:                         # Change the level (next)
-                            self.ChangeLevel(1)
-
                         if event.key == pygame.K_UP:                            # Up music sound
                             self.ChangeSound(1)
                         elif event.key == pygame.K_DOWN:                        # down music sound
@@ -257,7 +249,8 @@ class Game:                                                                     
 
             self.pressed = pygame.key.get_pressed()                             # For functions that allowed continuous pressing
             if not self.pausing:
-                self.player.MovementManager(self.map_borders_pos, self.screen_size, self.pressed)
+                self.player.MovementManager(self.map_borders_pos, self.screen_size, self.pressed,
+                                            self.Cells, self.Life_bubbles, self.Enemies)
 
             # if self.pressed[pygame.K_h]:                                      # !! [unused] Hide player in title
             #     self.going_home = True
@@ -285,14 +278,15 @@ class Game:                                                                     
         self.DisplayUI()
         self.DisplayLevelData()
         # self.CheckGoingHome()                                                 # !! Not available now
+        self.CheckNextLevel()
         if self.pausing:
             self.DisplayPause()
         pygame.display.flip()
         self.horloge.tick(self.fps)
 
     def CalculCameraPos(self):
-        self.camera_pos = [- (self.player.rect.x - self.screen_size[0] // 2 + self.player.radius),
-                           - (self.player.rect.y - self.screen_size[1] // 2 + self.player.radius)]
+        self.camera_pos = [- (self.player.rect.x - self.screen_size[0] // 2 + self.player.current_radius),
+                           - (self.player.rect.y - self.screen_size[1] // 2 + self.player.current_radius)]
 
     def DisplayBackground(self):
         self.window.fill(self.color_black)
@@ -349,7 +343,7 @@ class Game:                                                                     
 
     def DisplayPlayer(self):                                                    # Display player
         player = self.player_body if self.player_body is not None else self.player.image
-        position = (int(self.screen_size[0] * 0.5 - self.player.radius), int(self.screen_size[1] * 0.5 - self.player.radius))
+        position = (int(self.screen_size[0] * 0.5 - self.player.current_radius), int(self.screen_size[1] * 0.5 - self.player.current_radius))
         self.window.blit(player, position)
 
     def DisplayUI(self):
@@ -367,7 +361,8 @@ class Game:                                                                     
         nb_cells_surface_bg = (self.screen_size[0] * 0.5 - nb_cells_width * 0.5, screen_gap,
                                nb_cells_width, nb_cells_height)
         pygame.draw.rect(self.window, self.player.cell_color_bg, nb_cells_surface_bg, 0, nb_cells_height)
-        percent = self.player.cells_eaten / self.player.cells_eaten_max         # Display current number of cells eaten
+        # Display current number of cells eaten
+        percent = self.player.cells_eaten / self.player.cells_eaten_max if self.player.cells_eaten_max != 0 else 0
         nb_cells_surface = (self.screen_size[0] * 0.5 - nb_cells_width * 0.5, screen_gap,
                             int(nb_cells_width * percent), nb_cells_height)
         pygame.draw.rect(self.window, self.player.cell_color, nb_cells_surface, 0, nb_cells_height)
@@ -378,19 +373,14 @@ class Game:                                                                     
         bar_width = int(self.screen_size[0] * 0.125)
         bg_enemies_bar_pos = (gap, gap, bar_width, bar_height)                  # Display bg enns bar (up-left)
         pygame.draw.rect(self.window, self.set_bg_color((250, 60, 60)), bg_enemies_bar_pos, 0, bar_height)
-        percent = self.eaten_enemies / len(self.Enemies)                        # Display enns bar
+        percent = len(self.Enemies) / self.nb_enemies_max                       # Display enns bar
         enemies_bar_pos = (gap, gap, int(bar_width * percent), bar_height)
         pygame.draw.rect(self.window, (250, 60, 60), enemies_bar_pos, 0, bar_height)
         bg_life_bar_pos = (gap, gap * 2 + bar_height, bar_width, bar_height)    # Display bg life bar (up-left)
         pygame.draw.rect(self.window, self.set_bg_color((120, 250, 30)), bg_life_bar_pos, 0, bar_height)
-        percent = self.eaten_life_bubbles / len(self.Life_bubbles)              # Display life bar
+        percent = len(self.Life_bubbles) / self.nb_life_bubbles_max             # Display life bar
         life_bar_pos = (gap, gap * 2 + bar_height, int(bar_width * percent), bar_height)
         pygame.draw.rect(self.window, (120, 250, 30), life_bar_pos, 0, bar_height)
-
-        """                                                 # !!!
-        player_text = self.text_font.render(f"P: ({self.player.rect.x}, {self.player.rect.y})", True, self.color_white)
-        self.window.blit(player_text, (10, 100))
-        """
 
     def DisplayPause(self):
         self.window.blit(self.paused_glass, (0, 0))                             # Fond semi-transparent
@@ -442,7 +432,7 @@ class Game:                                                                     
                 self.player.ChangeMovementMethod()
             self.player.MoveWithMouse(goal_pos=self.player_home_position)
 
-            player_center = [self.player.rect.x + self.player.radius, self.player.rect.y + self.player.radius]
+            player_center = [self.player.rect.x + self.player.current_radius, self.player.rect.y + self.player.current_radius]
             if self.IsClose(player_center, self.player_home_position, 0):       # self.player.size * 0.1):
                 self.going_home = False
 
@@ -527,35 +517,30 @@ class Game:                                                                     
                 enemy.rect.y = int(enemy.rect.y * 0.5)
                 enemy.speed = int(enemy.speed * 0.5)
 
-    # ! Add respawn player in map center
-    def ChangeLevel(self, direction=1):                                         # Update level (bubbles, bg, music...)
-        if direction > 0:
+    def CheckNextLevel(self):                                                   # Update level (bubbles, bg, music...)
+        if self.player.cells_eaten >= self.player.cells_eaten_max:
             self.level_index += 1
-        elif direction < 0:
-            self.level_index -= 1
-        if self.level_index > len(self.Color_names) - 1:
-            self.level_index = 0
-        elif self.level_index < 0:
-            self.level_index = len(self.Color_names) - 1
-        self.color_name_bg = self.Color_names[self.level_index]                 # Update Colors
-        self.color_bg_start = self.Levels[self.level_index].start_color
-        self.color_bg_end = self.Levels[self.level_index].end_color
-        full_map_size = self.Levels[self.level_index].map_size
-        second_map_size = [int(full_map_size[0] * 0.5), int(full_map_size[1] * 0.5)]
-        self.map_size = full_map_size if self.full_screening else second_map_size                   # Update map size
-        NO_pos = (int(self.screen_size[0] * 0.5), int(self.screen_size[1] * 0.5))
-        self.map_borders_pos = (NO_pos[0], NO_pos[1], NO_pos[0] + self.map_size[0], NO_pos[1] + self.map_size[1])
-        full_bg_size = [self.map_size[0] + self.screen_size[0], self.map_size[1] + self.screen_size[1]]
-        second_bg_size = [int(full_bg_size[0] * 0.5), int(full_bg_size[1] * 0.5)]
-        self.background_size = full_bg_size if self.full_screening else second_bg_size              # Update bg size
-        self.set_background()                                                   # Update gradient bg
-        self.song_name = f"musics/{self.color_name_bg}.mp3"
-        pygame.mixer.music.load(self.song_name)                                 # Update music
-        pygame.mixer.music.rewind()                                             # Change current played music
-        self.LoadMapBorders()                                                   # Update map borders
-        self.LoadBubbles()                                                      # Update bubbles
-        self.player.map_borders = self.map_borders_pos
-        self.player.ChangeLevel()
+            if self.level_index > len(self.Color_names) - 1:
+                self.level_index = 0
+            self.color_name_bg = self.Color_names[self.level_index]             # Update Colors
+            self.color_bg_start = self.Levels[self.level_index].start_color
+            self.color_bg_end = self.Levels[self.level_index].end_color
+            full_map_size = self.Levels[self.level_index].map_size
+            second_map_size = [int(full_map_size[0] * 0.5), int(full_map_size[1] * 0.5)]
+            self.map_size = full_map_size if self.full_screening else second_map_size                   # Update map size
+            NO_pos = (int(self.screen_size[0] * 0.5), int(self.screen_size[1] * 0.5))
+            self.map_borders_pos = (NO_pos[0], NO_pos[1], NO_pos[0] + self.map_size[0], NO_pos[1] + self.map_size[1])
+            full_bg_size = [self.map_size[0] + self.screen_size[0], self.map_size[1] + self.screen_size[1]]
+            second_bg_size = [int(full_bg_size[0] * 0.5), int(full_bg_size[1] * 0.5)]
+            self.background_size = full_bg_size if self.full_screening else second_bg_size              # Update bg size
+            self.set_background()                                               # Update gradient bg
+            self.song_name = f"musics/{self.color_name_bg}.mp3"
+            pygame.mixer.music.load(self.song_name)                             # Update music
+            pygame.mixer.music.rewind()                                         # Change current played music
+            self.LoadMapBorders()                                               # Update map borders
+            self.LoadBubbles()                                                  # Update bubbles
+            self.player.map_borders = self.map_borders_pos
+            self.player.ChangeLevel()
 
     def SongManager(self):                                                      # Change music based on card
         if not pygame.mixer.music.get_busy() and not self.music_pausing or self.music_pos >= self.music_lenght:
