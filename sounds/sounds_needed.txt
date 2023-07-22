@@ -6,7 +6,7 @@ Sounds needed:
 - background (whales or else)
 - player (attack)
 - player (die)
-- player (fast  in water)
+- player (fast in water)
 - player (slow in water)
 - player (take damage)
 - player (upgrade level)

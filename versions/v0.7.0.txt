@@ -1,0 +1,4 @@
+v0.7.0
+
+- Ajouter équilibrage / difficulté du jeu
+- Ajouter quitter le jeu si le joueur meurt

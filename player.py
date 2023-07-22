@@ -1,37 +1,44 @@
-from math import *
+from math import sqrt
 # from random import *
 # from time import *
-from bubble import Bubble
+from bubble import Bubble, CellEaten
 import pygame
 
 
 # ! [later] Upgrade function Attack()
 # ! [later] Add function Evolve() (modify appearance)
 class Player(Bubble):                                                           # Player in the game
-    def __init__(self, x=0, y=0, map_borders=None, size=100, color=(216, 216, 216), name="Player", length=1, speed=20, *groups):
+    def __init__(self, x=0, y=0, map_borders=None, screen_size=None, size=100, color=(216, 216, 216),
+                 name="Player", length=1, speed=20, *groups):
         super().__init__(x, y, map_borders, size, color, speed, *groups)
+        self.is_dead = False
         self.name = name
         self.group = groups
         self.Methods = ["mouse", "keyboard"]
         self.move_method = self.Methods[0]                                      # Mouse movement by default
-        self.evolution = 0                                                      # ! [later]
+        self.screen_size = screen_size
+        self.evolution = 0                                                      # ! [later] Appearance
         self.length = length                                                    # ! [later]
 
         self.max_diameter = size
         self.max_radius = int(size * 0.5)
         self.current_radius = int(self.max_radius * 0.5)
         self.current_diameter = self.current_radius * 2
+        self.screen_pos = (int(self.screen_size[0] * 0.5 - self.current_radius), int(self.screen_size[1] * 0.5 - self.current_radius))
 
         self.life = 100
         self.life_max = 100
         self.cells_eaten = 0
         self.cells_eaten_max = 1                                                # Depends on nb of cells in level
+        self.stomach_capacity = 10
+        self.Stomach = []                                                       # [later] Use as money ?
+
         self.life_color = (45, 240, 115)
         self.life_color_bg = (30, 160, 75)
         self.cell_color = (255, 230, 25)
         self.cell_color_bg = (255, 250, 225)
 
-        self.membrane_width = int(self.diameter * 0.05)                         # Cellular membrane of player
+        self.membrane_width = int(self.current_radius * 0.1)                    # Cellular membrane of player
         self.image = None
         self.reflect_surface = None
         self.set_image(self.current_radius)
@@ -39,11 +46,8 @@ class Player(Bubble):                                                           
         self.rect.x = self.set_position_x() if x == 0 else x
         self.rect.y = self.set_position_y() if y == 0 else y
 
-    @staticmethod
-    def setName(name):                                                          # Set player name ([later] move in menu)
-        if name in ["Player", "", None]:
-            name = input("Entrez votre nom : ")
-        return name
+    def setName(self, name=None):                                                     # Set player name
+        self.name = "Player" if name is None else name
 
     def set_position_x(self):                                                   # Put player in middle of map
         return int(self.map_borders[0] + self.map_borders[2] * 0.5 - self.current_radius)
@@ -68,16 +72,27 @@ class Player(Bubble):                                                           
     def ChangeLevel(self):                                                      # Adapt player to next level
         self.evolution += 1
         self.cells_eaten = 0
+        self.Stomach = []
         self.current_radius = int(self.max_radius * 0.5)
         self.current_diameter = self.current_radius * 2
+        self.screen_pos = (int(self.screen_size[0] * 0.5 - self.current_radius), int(self.screen_size[1] * 0.5 - self.current_radius))
+        self.membrane_width = int(self.current_radius * 0.1)
         self.rect.x = self.set_position_x()
         self.rect.y = self.set_position_y()
         self.set_image()
 
     def Eat(self):
         self.cells_eaten += 1
-        self.current_radius += self.cells_eaten / self.cells_eaten_max * (self.max_radius - self.current_radius)
+        self.current_radius += self.cells_eaten / self.cells_eaten_max * (self.max_radius - self.current_radius)  # Grow
+        self.current_diameter = self.current_radius * 2
+        self.membrane_width = int(self.current_radius * 0.1)
+        self.screen_pos = (int(self.screen_size[0] * 0.5 - self.current_radius), int(self.screen_size[1] * 0.5 - self.current_radius))
         self.set_image(self.current_radius)
+
+        if len(self.Stomach) < self.stomach_capacity:
+            self.Stomach.append(CellEaten(player=self))
+        for cell in self.Stomach:
+            cell.set_player_radius(self.current_radius)
 
     def Attack(self):                                                           # ! [later] Add damage, defense, skills...
         pass
@@ -90,8 +105,9 @@ class Player(Bubble):                                                           
     def TakeDamage(self, amount=0):
         self.life -= amount
         if self.life <= 0:
-            return True
-        return False
+            self.life = 0
+            self.death_sound.play()
+            self.is_dead = True
 
     def ChangeMovementMethod(self):                                             # Change the movement type of the player
         self.move_method = self.Methods[0] if self.move_method == self.Methods[1] else self.Methods[1]
@@ -161,6 +177,12 @@ class Player(Bubble):                                                           
         return sqrt((circle.rect.x + circle.radius - self.rect.x - self.current_radius) ** 2 +
                     (circle.rect.y + circle.radius - self.rect.y - self.current_radius) ** 2) <= self.current_radius - circle.radius
 
+    def CollideBubble(self, bubble):
+        distance = self.get_min_distance(self, bubble)
+        if distance <= int(bubble.radius * 0.5):                                # Prevent player from eating bubble
+            bubble.rect.x += self.current_radius if self.rect.x < bubble.rect.x else - self.current_radius
+            bubble.rect.y += self.current_radius if self.rect.y < bubble.rect.y else - self.current_radius
+
     def CheckCellsCollision(self, Cells=None):                                  # Check if eat cells
         if Cells is None:
             return
@@ -171,22 +193,28 @@ class Player(Bubble):                                                           
                 cell.SelfDestruction()
                 Cells.remove(cell)
 
-    def CheckLifeBubblesCollision(self, LifeBubbles=None):                            # Check if eat life-bubbles
+    def CheckLifeBubblesCollision(self, LifeBubbles=None):                      # Check if eat life-bubbles
         if LifeBubbles is None:
             return
 
         for life_bubble in LifeBubbles:
             if self.check_touch_circle(life_bubble):
-                self.GainLife(life_bubble.life_gain)
-                life_bubble.SelfDestruction()
-                LifeBubbles.remove(life_bubble)
+                if self.life < self.life_max:                                   # Prevent player from wasting healing
+                    self.GainLife(life_bubble.life_gain)
+                    life_bubble.SelfDestruction()
+                    LifeBubbles.remove(life_bubble)
+                else:
+                    self.CollideBubble(life_bubble)
 
-    def CheckEnemiesCollision(self, Enemies=None):                                  # Check if eat cells
+    def CheckEnemiesCollision(self, Enemies=None):                              # Check if can eat enemies
         if Enemies is None:
             return
 
         for enemy in Enemies:
             if self.check_touch_circle(enemy):
-                self.TakeDamage(enemy.damage)
-                enemy.SelfDestruction()
-                Enemies.remove(enemy)
+                if self.current_radius >= enemy.radius * 1.5:                   # Prevent player from taking damage
+                    self.TakeDamage(enemy.damage)
+                    enemy.SelfDestruction()
+                    Enemies.remove(enemy)
+                else:
+                    self.CollideBubble(enemy)

@@ -1,0 +1,9 @@
+v1.0.0
+
+- Régler le léger problème de collisions
+  pour les cellules mangées par le joueur
+- Enlever les fonctions et variables
+  en rapport avec le changement de taille
+  de l'écran
+- Remplacer les commentaires en anglais
+- Ajouter une documentation

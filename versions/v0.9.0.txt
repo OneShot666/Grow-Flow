@@ -1,0 +1,4 @@
+v0.9.0
+
+- Ajouter afficher le nom du joueur à l'écran
+- Ajouter demander le nom du joueur via interface

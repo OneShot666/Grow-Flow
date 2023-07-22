@@ -1,0 +1,4 @@
+v0.6.0
+
+- Ajouter des dégats (quand mange ennemi)
+- Ajouter du soin (quand mange bulle de vie)
