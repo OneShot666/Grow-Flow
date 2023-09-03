@@ -4,6 +4,6 @@ v1.0.0
   pour les cellules mangées par le joueur
 - Enlever les fonctions et variables
   en rapport avec le changement de taille
-  de l'écran
+  de l'écran et la dsparition dans le titre
 - Remplacer les commentaires en anglais
 - Ajouter une documentation

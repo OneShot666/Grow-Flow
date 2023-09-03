@@ -6,25 +6,25 @@ from copy import deepcopy
 
 # ! Move map borders here ?
 class Level:                                                                    # Create a level for the game
-    def __init__(self, depth=1, color_name="blue", color=(50, 180, 255), music_name=None):
-        self.depth = 1 if depth < 1 else depth
+    def __init__(self, depth=0, color_name="blue", color=(50, 180, 255), music_name=None):
+        self.depth = 0 if depth < 0 else depth
         self.color_name = color_name
         self.color = self.CheckColorValue(color)
-        self.start_color, self.end_color = self.setEndColor(self.color)
+        self.start_color, self.end_color = self.setStartEndColors(self.color)
         self.music_name = f"musics/{self.color_name}.mp3" if music_name is None else f"musics/{music_name}.mp3"
-        self.nb_cells = int(self.depth * 100)
-        self.nb_cells_max = int(self.depth * 100)
+        self.nb_cells = int(100 + self.depth * 20)
+        self.nb_cells_max = self.nb_cells
         self.nb_enemy = int(self.depth * 10)
-        self.nb_enemy_max = int(self.depth * 10)
-        self.nb_life = int(self.nb_enemy_max * 0.5)
-        self.nb_life_max = int(self.nb_enemy_max * 0.5)
+        self.nb_enemy_max = self.nb_enemy
+        self.nb_life = int(self.depth * 5)
+        self.nb_life_max = self.nb_life
         self.map_size = [self.nb_cells_max * 30, self.nb_cells_max * 20]        # In pixels
 
     def present(self):                                                          # Present the level
         print(f"'{self.color_name}' {self.color} : lvl {self.depth}, {self.nb_cells} / {self.nb_cells_max} cells")
 
     @staticmethod
-    def CheckColorValue(color):                                                 # Check if the colors values are correct
+    def CheckColorValue(color: list | tuple):                                   # Check if the colors' values are correct
         color = list(color)
         color[0] = 0 if color[0] < 0 else 255 if color[0] > 255 else color[0]
         color[1] = 0 if color[1] < 0 else 255 if color[1] > 255 else color[1]
@@ -32,7 +32,7 @@ class Level:                                                                    
         return tuple(color)
 
     @staticmethod
-    def setEndColor(color):                                                     # Set start color and end color of level
+    def setStartEndColors(color: list | tuple):                                 # Set start color and end color of level
         color = list(color)
         rgb_min = color.index(min(color))
         rgb_max = color.index(max(color))

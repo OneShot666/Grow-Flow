@@ -1,0 +1,9 @@
+v2.0.0
+
+- Ajouter faire apparaître le joueur s'il meurt:
+  ajouter des mini-sauvegardes, gain de vie
+- Sécuriser le code du jeu: vérifier les boucles,
+  chiffrer les fichiers, ...
+- Ajouter des améliorations pour le joueur:
+  caractéristiques, skins, ...
+- Permettre au joueur d'attaquer et de se défendre

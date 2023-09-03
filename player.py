@@ -8,9 +8,9 @@ import pygame
 # ! [later] Upgrade function Attack()
 # ! [later] Add function Evolve() (modify appearance)
 class Player(Bubble):                                                           # Player in the game
-    def __init__(self, x=0, y=0, map_borders=None, screen_size=None, size=100, color=(216, 216, 216),
+    def __init__(self, depth=0, map_borders=None, x=0, y=0, screen_size=None, size=100, color=(216, 216, 216),
                  name="Player", length=1, speed=20, *groups):
-        super().__init__(x, y, map_borders, size, color, speed, *groups)
+        super().__init__(depth, map_borders, x, y, size, color, speed, *groups)
         self.is_dead = False
         self.name = name
         self.group = groups
@@ -177,9 +177,9 @@ class Player(Bubble):                                                           
         return sqrt((circle.rect.x + circle.radius - self.rect.x - self.current_radius) ** 2 +
                     (circle.rect.y + circle.radius - self.rect.y - self.current_radius) ** 2) <= self.current_radius - circle.radius
 
-    def CollideBubble(self, bubble):
+    def CollideBubble(self, bubble):                                            # Prevent player from eating bubble
         distance = self.get_min_distance(self, bubble)
-        if distance <= int(bubble.radius * 0.5):                                # Prevent player from eating bubble
+        if distance <= int(bubble.radius * 0.5):
             bubble.rect.x += self.current_radius if self.rect.x < bubble.rect.x else - self.current_radius
             bubble.rect.y += self.current_radius if self.rect.y < bubble.rect.y else - self.current_radius
 

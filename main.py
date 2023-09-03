@@ -1,39 +1,41 @@
 from math import sqrt, atan2, cos, sin
 from random import choice
 from time import time, strftime, gmtime
-from os import getcwd, listdir
+from os import path, getcwd, listdir
 from mutagen.mp3 import MP3
 from player import Player
 from level import Level
 from bubble import Bubble, LifeBubble, Enemy, CellEaten
 import pygame
 import sys
+import ast
 
-
-# !!! 01/08: Eval Système Exploitation, Chp 1 & 2 (faire Xmind + watch vidéos) + réviser et faire marcher MV [Linux]
 
 """ Documentation
 creator : One Shot
 name : Grow Flow
 year of creation : 2023
-version : 1.0.0
+version : 1.0.5
 language : python
 purpose : A little relaxation game where you play a cell in an underwater world.
           Grow by feeding on the cells and smaller creatures around you and discover the world of Grow Flow.
 arguments : None
-requirements : libraries 'math', 'random', 'time', 'os', 'mutagen', 'pygame' and 'sys'.
+requirements : libraries 'math', 'random', 'time', 'os', 'mutagen', 'pygame', 'sys', 'ast'.
 """
 
 
-# ! [later: 1.5.0] Add effects (flou, rayons, bulles, creatures au fond ?)
-# ! [later: 1.5.0] Add menus + parameters (choose manière de bouger, de changer fond, Commandes, Credits, ...)
-# ! Add star (buts) pour les levels + load player game when launching level
-# ! [later: 1.5.0] Make player move in circles if player afk
-# ! [later: 1.5.0] Add tutorials + transparences (add to UI)
-# ! [later: 2.0.0] Add respawn if player dies (mini-save + gain de vie si blessé)
-# ! [later: 2.0.0] Secure game (boucles, fichiers chiffrés pour data, ...)
-# ! [later: 2.0.0] Add upgrades (player stats + skins)
-# ! [later: 2.0.0] Add player attack + power (in certain level)
+# ! [1.1.0] Add obstacles (random) ?
+# ! [1.1.5] Player powers: speed, detect enemies / life bubbles, invisibility (timer), damage, ...
+# ! [1.2.0] Add star (small missions) pour les levels + rewards (mutations)
+# ! [1.2.5] Add load player's game when launching level (! if life = 0)
+# ! [1.3.0] Add effects (flou, rayons, bulles, creatures au fond ?)
+# ! [1.4.0] Add menus + parameters (choose manière de bouger, de changer fond, Commandes, Credits, ...)
+# ! [1.5.0] Make player move in circles if player afk
+# ! [1.6.0] Add tutorials + transparences (add to UI)
+# ! [1.7.0] Add respawn if player dies (mini-save + gain de vie si blessé)
+# ! [1.8.0] Secure game (boucles, fichiers chiffrés pour data, ...)
+# ! [1.9.0] Add upgrades (player stats + skins)
+# ! [2.0.0] Add player attack + power (in certain level)
 class Game:                                                                     # Main class of the game
     def __init__(self):
         pygame.init()
@@ -41,7 +43,7 @@ class Game:                                                                     
         pygame.mixer.init()
         # Booleans data
         self.running = True
-        self.menuing = True                                                     # ! [later] Add in menu
+        self.menuing = True                                                     # ! [later] Add in the menu
         self.playing = False                                                    # ! [later] Use when playing (with menu)
         self.asking_name = True
         self.play_pausing = False
@@ -50,11 +52,12 @@ class Game:                                                                     
         # Game data
         self.game_name = "Grow Flow"
         self.creator = "One Shot"
-        self.version = "v1.0.0"
+        self.version = "v1.0.5"
         self.description = "A relaxing underwater fantasy game where you play as a small water creature. " \
                            "Survive and explore this fantasy world. Grow and develop your abilities to " \
                            "go ever deeper into the adventure!"
-        print(f"Bienvenue sur {self.game_name} ! ({self.version})\n")
+        self.music_composer = "The Crew : Mission Deep Sea"
+        print(f"Bienvenue sur {self.game_name} ! ({self.version})\n")           # !! Remove when full on screen
         # Icons data
         pygame.display.set_caption(self.game_name)                              # Game name
         self.icon = pygame.image.load("images/icon.png")                        # Game icon
@@ -76,8 +79,7 @@ class Game:                                                                     
         self.background_image = None                                            # ! Modify for unique color by level ?
         # Fonts data
         self.Fonts = [_ for _ in listdir(f"{self.path}/fonts") if _.endswith(".ttf")]  # Get fonts
-        self.font_name = choice(self.Fonts)
-        print(self.font_name)
+        self.font_name = choice(self.Fonts)                                     # Random font
         self.giant_font_size = 100
         self.big_font_size = 50
         self.middle_font_size = 25
@@ -121,6 +123,8 @@ class Game:                                                                     
         self.bubbling_sound.set_volume(0.2)
         self.low_bubbling_sound = pygame.mixer.Sound(f"sounds/low_bubbling.mp3")
         self.low_bubbling_sound.set_volume(0.3)
+        self.wrong_pseudo_sound = pygame.mixer.Sound(f"sounds/wrong_pseudo.mp3")
+        self.wrong_pseudo_sound.set_volume(0.5)
         # Timers data
         self.time_playing = time()
         self.time_now = time()
@@ -140,7 +144,7 @@ class Game:                                                                     
         self.ask_box_title_text_color = (137, 255, 187)                         # Light cyan
         self.ask_box_entry_color = (55, 211, 242)                               # Turquoise
         self.ask_box_entry_text_color = (73, 168, 252)                          # Light turquoise
-        self.Unwanted_pseudo = ["", "\\", None]
+        self.Unwanted_pseudo = ["", " ", "*", "?", "<", ">", ":", "|", "'", '"', "/", "\\", None]
         self.pseudonyme = ""
         # Levels data
         self.Levels = []
@@ -244,17 +248,17 @@ class Game:                                                                     
         print(f"Chargement des bulles en cours...")
         self.Cells.empty()
         for _ in range(self.Levels[self.level_index].nb_cells_max):
-            self.Cells.add(Bubble(map_borders=self.map_borders_pos))
+            self.Cells.add(Bubble(self.level_index, self.map_borders_pos))
         self.player.set_cells_eaten_max(len(self.Cells))
 
         self.Life_bubbles.empty()
         for _ in range(self.Levels[self.level_index].nb_life_max):
-            self.Life_bubbles.add(LifeBubble(map_borders=self.map_borders_pos))
+            self.Life_bubbles.add(LifeBubble(self.level_index, self.map_borders_pos))
         self.nb_life_bubbles_max = len(self.Life_bubbles)
 
         self.Enemies.empty()
         for _ in range(self.Levels[self.level_index].nb_enemy_max):
-            self.Enemies.add(Enemy(map_borders=self.map_borders_pos))
+            self.Enemies.add(Enemy(self.level_index, self.map_borders_pos))
         self.nb_enemies_max = len(self.Enemies)
         print(f"Chargement des bulles terminé !")
 
@@ -271,7 +275,7 @@ class Game:                                                                     
                 if event.type == pygame.QUIT:
                     self.CloseGame()
 
-                if self.asking_name:                                            # ! [later] Move in menu
+                if self.asking_name:                                            # ! [later] Move in the menu
                     self.TextManager(event)
                 else:
                     if event.type == pygame.KEYUP:
@@ -312,7 +316,7 @@ class Game:                                                                     
 
     def DisplayManager(self):                                                   # Manage the sprites displayed in game
         self.CalculCameraPos()
-        # self.window.fill(self.color_black)                                    # ! For tests
+        # self.window.fill(self.color_black)                                      # ! For tests
         self.DisplayBackground()
         # self.DisplayMapBorders()                                                # ! [reuse later]
         self.DisplayArtefacts()                                                 # ! [later]
@@ -324,14 +328,23 @@ class Game:                                                                     
         self.DisplayUI()
         self.DisplayLevelData()
         self.CheckNextLevel()
-        if self.play_pausing:
-            self.DisplayPause()
-        self.CheckAskPlayerName()                                               # ! [later] Move in menu ?
+        self.DisplayPause()
+        self.CheckAskPlayerName()                                               # ! [later] Move in the menu ?
         pygame.display.flip()
         self.horloge.tick(self.fps)
 
+    def MenuManager(self):
+        self.LaunchGame()
+        self.ParameterManager()
+
+    def LaunchGame(self):
+        pass
+
+    def ParameterManager(self):
+        pass
+
     # ! Add cursor + maintain backspace
-    def CheckAskPlayerName(self):                                               # Set player's name (interface)
+    def CheckAskPlayerName(self):                                               # Display player's name interface
         if self.player.name == "Player" and self.asking_name:
             self.play_pausing = True
             self.music_pausing = True
@@ -367,10 +380,15 @@ class Game:                                                                     
             if event.key == pygame.K_ESCAPE:
                 self.asking_name = False
             if event.key == pygame.K_RETURN:
-                self.player.setName(self.pseudonyme)
-                self.asking_name = False
-                self.play_pausing = False
-                self.music_pausing = False
+                if self.CheckPseudonyme():
+                    self.player.setName(self.pseudonyme)
+                    if path.exists(f"saves/{self.player.name}.txt"):
+                        self.LoadGame()
+                    self.asking_name = False
+                    self.play_pausing = False
+                    self.music_pausing = False
+                else:
+                    self.wrong_pseudo_sound.play()
             elif event.key == pygame.K_BACKSPACE:
                 self.pseudonyme = self.pseudonyme[:-1]
             elif event.key == pygame.K_DELETE:
@@ -379,6 +397,12 @@ class Game:                                                                     
                 self.pseudonyme += " " * 4
             else:
                 self.pseudonyme += event.unicode
+
+    def CheckPseudonyme(self):
+        for letter in self.pseudonyme:
+            if letter in self.Unwanted_pseudo:
+                return False
+        return True
 
     def CalculCameraPos(self):
         self.camera_pos = [- (self.player.rect.x - self.screen_size[0] // 2 + self.player.current_radius),
@@ -439,7 +463,8 @@ class Game:                                                                     
 
     def DisplayPlayer(self):                                                    # Display the player
         for meal in self.player.Stomach:                                        # Display eaten cells in the player
-            meal.Update()
+            if not self.play_pausing:
+                meal.Update()
             self.window.blit(meal.image, meal.screen_pos)
 
         self.window.blit(self.player.image, self.player.screen_pos)
@@ -502,12 +527,13 @@ class Game:                                                                     
         pygame.draw.rect(self.window, (120, 250, 30), life_bar_pos, 0, bar_height)
 
     def DisplayPause(self):                                                     # Display pause menu
-        self.window.blit(self.paused_glass, (0, 0))                             # Semi-transparent background
-        pause_text = self.big_font.render(f"Pause", True, self.color_black)
-        pause_size = pause_text.get_size()
-        self.window.blit(pause_text, ((self.screen_size[0] - pause_size[0]) * 0.5, (self.screen_size[1] - pause_size[1]) * 0.5))
-        self.DisplayTitle()
-        self.DisplayGameData()
+        if self.play_pausing:
+            self.window.blit(self.paused_glass, (0, 0))                         # Semi-transparent background
+            pause_text = self.big_font.render(f"Pause", True, self.color_black)
+            pause_size = pause_text.get_size()
+            self.window.blit(pause_text, ((self.screen_size[0] - pause_size[0]) * 0.5, (self.screen_size[1] - pause_size[1]) * 0.5))
+            self.DisplayTitle()
+            self.DisplayGameData()
 
     def DisplayTitle(self):                                                     # Display game name
         if self.title_image is None:
@@ -638,33 +664,37 @@ class Game:                                                                     
         else:
             self.bg_sound.play(-1)
 
+    # ! Pb maj entre level et save
     def LoadGame(self):                                                         # Load last played game
+        print(f"Chargement de la sauvegarde en cours...")
+        start_load_time = time()
         save = open(f"saves/{self.player.name}.txt", "r")
         lines = save.readlines()
 
         # Load player's game data
         self.level_index = int(lines[0])
         self.color_name_bg = str(lines[1]).replace("\n", "")
-        self.color_bg_start = tuple(lines[2])
-        self.color_bg_end = tuple(lines[3])
+        self.color_bg_start = tuple(ast.literal_eval(lines[2].replace("\n", "")))
+        self.color_bg_end = tuple(ast.literal_eval(lines[3].replace("\n", "")))
         self.Cells.empty()
         for _ in range(int(lines[4])):
-            self.Cells.add(Bubble(map_borders=self.map_borders_pos))
+            self.Cells.add(Bubble(self.level_index, self.map_borders_pos))
         self.player.set_cells_eaten_max(len(self.Cells))
         self.Life_bubbles.empty()
         for _ in range(int(lines[5])):
-            self.Life_bubbles.add(Bubble(map_borders=self.map_borders_pos))
+            self.Life_bubbles.add(LifeBubble(self.level_index, self.map_borders_pos))
         self.player.set_cells_eaten_max(len(self.Life_bubbles))
         self.Enemies.empty()
         for _ in range(int(lines[6])):
-            self.Enemies.add(Bubble(map_borders=self.map_borders_pos))
+            self.Enemies.add(Enemy(self.level_index, self.map_borders_pos))
         self.player.set_cells_eaten_max(len(self.Enemies))
+        self.time_playing = float(lines[7])
 
         # Load player's data
-        # self.player.name = datas[7]                                           # ! Add check ? (already in filename)
         self.player.rect.x = int(lines[8])
         self.player.rect.y = int(lines[9])
-        self.player.life = int(lines[10])
+        min_life = int(self.player.life_max * 0.1)
+        self.player.life = int(lines[10]) if int(lines[10]) > min_life else min_life
         self.player.evolution = int(lines[11])
         self.player.length = int(lines[12])
         self.player.current_radius = float(lines[13])
@@ -672,32 +702,60 @@ class Game:                                                                     
         self.player.membrane_width = int(self.player.current_radius * 0.1)
         self.player.cells_eaten = int(lines[14])
         self.player.Stomach = []
-        for _ in range(self.player.cells_eaten):
+        max_cell = self.player.stomach_capacity
+        nb_meal = self.player.cells_eaten if self.player.cells_eaten <= max_cell else max_cell
+        for _ in range(nb_meal):
             self.player.Stomach.append(CellEaten(player=self.player))
 
         save.close()
 
+        self.LoadSave()
+        end_load_time = time()
+        loading_time = round(end_load_time - start_load_time, 3)
+        print(f"Chargement de la sauvegarde terminée !({loading_time} sec)\n")
+
+    def LoadSave(self):
+        self.color_name_bg = self.Levels[self.level_index].color_name
+        self.color_bg_start = self.Levels[self.level_index].start_color
+        self.color_bg_end = self.Levels[self.level_index].end_color
+        self.map_size = self.Levels[self.level_index].map_size
+        self.set_background()
+        self.music_name = f"musics/{self.color_name_bg}.mp3"
+        self.LoadMapBorders()                                                   # ! Pb for levels (default size at start)
+        self.player.map_borders = self.map_borders_pos
+        self.LoadBubbles()
+        self.LoadArtefacts()
+
     def SaveGame(self):                                                         # Save/update current game
+        print(f"Sauvegarde en cours...")
         save = open(f"saves/{self.player.name}.txt", "w")
 
         # Save current game data
         save.write(f"{self.level_index}\n")
-        save.write(f"{self.color_name_bg}\n")
-        save.write(f"{self.color_bg_start}\n")
-        save.write(f"{self.color_bg_end}\n")
-        save.write(f"{len(self.Cells)}\n")
-        save.write(f"{len(self.Life_bubbles)}\n")
-        save.write(f"{len(self.Enemies)}\n")
+        save.write(f"{self.color_name_bg}\n")               # ! Can be loaded from level index: remove (//)
+        save.write(f"{self.color_bg_start}\n")              # ! //
+        save.write(f"{self.color_bg_end}\n")                # ! //
+        save.write(f"{len(self.Cells)}\n")                  # 5
+        save.write(f"{len(self.Life_bubbles)}\n")           # ! //
+        save.write(f"{len(self.Enemies)}\n")                # ! //
+        save.write(f"{self.time_playing}\n")
         # Save current player data
-        save.write(f"{self.player.name}\n")
         save.write(f"{self.player.rect.x}\n")
-        save.write(f"{self.player.rect.y}\n")
+        save.write(f"{self.player.rect.y}\n")               # 10
         save.write(f"{self.player.life}\n")
         save.write(f"{self.player.evolution}\n")
         save.write(f"{self.player.length}\n")
-        save.write(f"{self.player.cells_eaten}\n")
+        save.write(f"{self.player.current_radius}\n")
+        save.write(f"{self.player.cells_eaten}\n")          # 15
 
         save.close()
+        print(f"Sauvegarde terminée !")
+
+    def Credits(self):
+        print(f"Director\n{self.creator}\n")
+        print(f"Designer\n{self.creator}\n")
+        print(f"Editor\n{self.creator}\n")
+        print(f"Music composer\n{self.music_composer}\n")
 
     def CloseGame(self):                                                        # Close the game
         end_playing = time()

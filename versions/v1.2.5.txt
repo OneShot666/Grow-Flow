@@ -1,0 +1,18 @@
+v1.2.5
+
+- Retirer les éléments qui font laguer 
+  (optimisation de la vitesse du jeu)
+- Equilibrer le jeu: Reduction de la taille des
+  niveaux, diminution du nombre de cellules
+- Rendre les ennemis plus fort au fur et à mesure
+  des niveaux: vitesse, portée de détection,
+  dégâts, taille, ...
+- Ajouter des obstacles aléatoires
+- Ajouter les fonctionnalités de pouvoir du joueur:
+  vitesse, détection des autres bulles, dégâts,
+  invisibilité, ...
+- Ajouter des buts pour les niveaux: finir le niveaux,
+  ne pas prendre de dégâts, ne pas se soigner, ...
+- Ajouter des récompenses pour chaque but atteint
+- Ajouter charger la partie du joueur quand il lance 
+  une partie

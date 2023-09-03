@@ -6,16 +6,16 @@ import pygame
 
 # ! Add blur effets ? (make it one image)
 class Bubble(pygame.sprite.Sprite):
-    def __init__(self, x=0, y=0, map_borders=None, size=16, color=(250, 240, 210), speed=5, *groups):
+    def __init__(self, depth=0, map_borders=None, x=0, y=0, size=16, color=(250, 240, 210), speed=5, *groups):
         super().__init__(*groups)
-        self.show_dir = False
         self.group = groups
+        self.depth = 0 if depth < 0 else depth
         self.map_borders = self.set_map_borders() if map_borders is None else map_borders
-        self.speed = speed
+        self.speed = speed + self.depth
 
-        self.diameter = size
-        self.radius = int(size * 0.5)
-        self.current_radius = int(size * 0.25)
+        self.diameter = size + self.depth
+        self.radius = int(self.diameter * 0.5)
+        self.current_radius = int(self.diameter * 0.25)
         self.current_diameter = self.current_radius * 2
         self.dir_x = randint(-speed, speed)
         self.dir_y = randint(-speed, speed)
@@ -73,7 +73,7 @@ class Bubble(pygame.sprite.Sprite):
         self.reflect_surface = pygame.Surface((int(self.diameter * 0.15), int(self.diameter * 0.3)), pygame.SRCALPHA)
         pygame.draw.ellipse(self.reflect_surface, self.color_reflect,
                             (0, 0, self.reflect_surface.get_width(), self.reflect_surface.get_height()))
-        self.reflect_surface = pygame.transform.rotate(self.reflect_surface, -45)                       # Rotate surface
+        self.reflect_surface = pygame.transform.rotate(self.reflect_surface, -45)   # Rotate surface
         self.image.blit(self.reflect_surface, (self.radius * 0.35, self.radius * 0.35))
 
     @staticmethod
@@ -132,13 +132,13 @@ class Bubble(pygame.sprite.Sprite):
 
 
 class LifeBubble(Bubble):
-    def __init__(self, x=0, y=0, map_borders=None, size=24, color=(120, 250, 30),
-                 life_gain=10, detect_range=200, speed=5, *groups):
-        super().__init__(x, y, map_borders, size, color, speed, *groups)
+    def __init__(self, depth=0, map_borders=None, x=0, y=0, size=24, color=(120, 250, 30), speed=5,
+                 life_gain=10, detect_range=200, *groups):
+        super().__init__(depth, map_borders, x, y, size, color, speed, *groups)
         self.rect.x = self.set_position_x() if x == 0 else x
         self.rect.y = self.set_position_y() if y == 0 else y
-        self.life_gain = life_gain
-        self.detect_range = detect_range
+        self.life_gain = life_gain + self.depth * 2
+        self.detect_range = detect_range + self.depth * 10
 
     def Update(self, circles, player=None):
         distance = self.get_min_distance(self, player)
@@ -160,14 +160,14 @@ class LifeBubble(Bubble):
 
 
 class Enemy(Bubble):
-    def __init__(self, x=0, y=0, map_borders=None, size=40, color=(250, 60, 60),
-                 life=50, damage=25, detect_range=200, speed=10, *groups):
-        super().__init__(x, y, map_borders, size, color, speed, *groups)
+    def __init__(self, depth=0, map_borders=None, x=0, y=0, size=40, color=(250, 60, 60), speed=10,
+                 life=50, damage=25, detect_range=200, *groups):
+        super().__init__(depth, map_borders, x, y, size, color, speed, *groups)
         self.rect.x = self.set_position_x() if x == 0 else x
         self.rect.y = self.set_position_y() if y == 0 else y
-        self.life = life
-        self.damage = damage
-        self.detect_range = detect_range
+        self.life = life + self.depth * 10
+        self.damage = damage + self.depth * 5
+        self.detect_range = detect_range + self.depth * 20
 
     def Update(self, circles, player=None):
         distance = self.get_min_distance(self, player)
@@ -189,8 +189,8 @@ class Enemy(Bubble):
 
 
 class CellEaten(Bubble):
-    def __init__(self, x=0, y=0, map_borders=None, player=None, size=8, color=(250, 240, 210), speed=0, *groups):
-        super().__init__(x, y, map_borders, size, color, speed, *groups)        # Must keep 'map_borders' in
+    def __init__(self, depth=0, map_borders=None, x=0, y=0, size=8, color=(250, 240, 210), speed=0, player=None, *groups):
+        super().__init__(depth, map_borders, x, y, size, color, speed, *groups)        # Must keep 'map_borders' in
         self.player = player
         self.speed = round(randint(3, 10) / 10, 1) if speed == 0 else speed
         self.screen_pos = [int(self.player.screen_pos[0] + self.player.current_radius),
@@ -198,7 +198,7 @@ class CellEaten(Bubble):
         self.direction = randint(0, 360)
         self.dispersion = 30
 
-    def set_player_radius(self, radius):                                        # Update when player eat a cell (grow)
+    def set_player_radius(self, radius):                                        # Update when player eats a cell (grow)
         self.player.current_radius = radius
 
     def Update(self, **kwargs):                                                 # Update position
@@ -210,7 +210,7 @@ class CellEaten(Bubble):
         self.screen_pos[0] += self.dir_x
         self.screen_pos[1] += self.dir_y
 
-    def CalculateDirection(self):                                               # Calculate where cell go
+    def CalculateDirection(self):                                               # Calculate where cell goes
         return round(self.speed * cos(radians(self.direction)), 3), round(self.speed * sin(radians(self.direction)), 3)
 
     # ! Need upgrade (collisionne comme si player plus au sud-est) + se coince parfois aux bords
@@ -219,7 +219,7 @@ class CellEaten(Bubble):
         distance = int(sqrt(((self.screen_pos[0] + self.radius) - (self.player.screen_pos[0] + self.player.current_radius)) ** 2 +
                             ((self.screen_pos[1] + self.radius) - (self.player.screen_pos[1] + self.player.current_radius)) ** 2))
 
-        if distance + self.radius > self.player.current_radius - 1:             # If cell collide with player
+        if distance + self.radius > self.player.current_radius - 1:             # If cell collides with player
             self.direction = - abs(self.direction - randint(180 - self.dispersion, 180 + self.dispersion))
             self.direction = self.direction % 360 if self.direction > 360 else \
                 self.direction % -360 if self.direction < -360 else self.direction
