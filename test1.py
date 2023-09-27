@@ -11,6 +11,7 @@ class Game:
         self.running = True
         self.width, self.height = 800, 600
         self.screen = pygame.display.set_mode((self.width, self.height))
+        self.level_difficulty_index = 1
         self.level_difficulty = "Middle"
         self.level_index = 1
         self.bg_color = (84, 210, 250)  # Couleur de fond
@@ -36,7 +37,14 @@ class Game:
 
         menu.mainloop(self.screen)
 
+    def manage_summary(self):
+        if self.level_index == 1:
+            self.launch_level_1()
+        elif self.level_index == 2:
+            self.launch_level_2()
+
     def set_difficulty(self, difficulty, *args):
+        self.level_difficulty_index = difficulty[0][1]
         self.level_difficulty = difficulty[0][0]
         if args:
             pass
@@ -46,11 +54,8 @@ class Game:
         if args:
             pass
 
-    def manage_summary(self):
-        if self.level_index == 1:
-            self.launch_level_1()
-        elif self.level_index == 2:
-            self.launch_level_2()
+    def show_level_data(self):
+        print(f"Level {self.level_index} : difficulty '{self.level_difficulty}'")
 
     def launch_level_1(self):                               # Bubble bumping at the edges of the window
         # Chargement de l'image
@@ -79,6 +84,10 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+
+            pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_q] or pressed[pygame.K_ESCAPE]:
+                self.running = False
 
             self.screen.fill("lightblue")
 
@@ -119,6 +128,10 @@ class Game:
                 if event.type == pygame.QUIT:
                     self.running = False
 
+            pressed = pygame.key.get_pressed()
+            if pressed[pygame.K_q] or pressed[pygame.K_ESCAPE]:
+                self.running = False
+
             # Effacer l'écran avec un fond transparent
             self.screen.fill((0, 0, 0, 0))
 
@@ -143,9 +156,6 @@ class Game:
             fps += 1 if angle_rotation % 361 < 180 else -1
             fps = min_fps if fps < min_fps else fps
             self.clock.tick(fps)
-
-    def show_level_data(self):
-        print(f"Level {self.level_index} : difficulty '{self.level_difficulty}'")
 
 
 if __name__ == "__main__":

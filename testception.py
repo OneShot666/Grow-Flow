@@ -115,7 +115,7 @@ while True:
     if CheckCollision(player, rectangle):
         rectangle.reverse_direction()
 
-    """
+    """ Collisions
     if player.y + player.radius > rectangle.rect.y and player.y - player.radius < rectangle.rect.y + rectangle.rect.height:
         if player.x + player.radius > rectangle.rect.x and player.x - player.radius < rectangle.rect.x + rectangle.rect.width:
             rectangle.reverse_direction_y()  # Reverse the direction of the rectangle
