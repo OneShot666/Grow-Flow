@@ -64,18 +64,90 @@ Language : Python
 ## Roadmap
 
 <!-- Complete versions (look in project versions/ -->
-- v1.1.0 : Add random obstacles
-- v1.1.5 : Player powers: speed, detect enemies / life bubbles, invisibility (timer), damage, ...
-- v1.2.0 : Add star (small missions) pour les levels + rewards (mutations)
-- v1.2.5 : Add load player's game when launching level (! if life = 0)
-- v1.3.0 : Add effects (flou, rayons, bulles, creatures au fond ?)
-- v1.4.0 : Add menus + parameters (choose manière de bouger, de changer fond, Commandes, Credits, ...)
-- v1.5.0 : Make player move in circles if player afk
-- v1.6.0 : Add tutorials + transparences (add to UI)
-- v1.7.0 : Add respawn if player dies (mini-save + gain de vie si blessé)
-- v1.8.0 : Secure game (boucles, fichiers chiffrés pour data, ...)
-- v1.9.0 : Add upgrades (player stats + skins)
-- v1.9.8 : Add player attack + power (in certain level)
+- v0.0.1 : 
+    - Create basic functions of the game
+- v0.1.0 : 
+    - Create the main screen (window)
+    - Add life bar + cells bar (stomach)
+    - Choose a color for player
+- v0.2.0 :
+    - Add images and sounds for the game
+    - Add enemies and bubbles of life (heal player)
+- v0.3.0 : 
+    - Display bubbles and enemies to the game
+    - Add musics
+- v0.4.0 : 
+    - Add dynamic life bar, hunger bar and sounds bar
+    - Add feature to go to next level + update music
+    - Add movement for player with mouse
+- v0.5.0 : 
+    - Add spawn of cells (food), bubbles of life and enemies
+    - Make player bigger when eat cells
+    - Add eaten cells moving inside player
+- v0.6.0 : 
+    - Add damage when eat an enemy
+    - Add healing when eat a bubble of life
+- v0.7.0 : 
+    - Fix balancing fo the gameplay
+    - Close game when player die (will be change later by returning to main menu)
+- v0.8.0 : 
+    - Add auto saves
+    - Add update game with saves data (player's name, etc)
+- v0.9.0 : 
+    - Display player's name above themself
+    - Ask player's name when launch game
+- v1.0.0 : 
+    - Fix collision problem for eaten cells inside player
+    - Remove objects related to changing screen size and making title disappear
+    - Rewrite comments in english
+    - Add documentation
+- v1.0.5 : [In production]
+    - Optimize larger levels (old version make them lag) : background is now a single image (might be a file too big)
+    - Make enemies stronger as player goes through levels (increase speed, range, damage, or size) -> random upgrade(s)
+- v1.1.0 : 
+    - Add random obstacles
+- v1.1.5 :
+    - Add temporary powers for player :
+        - speed boost (add energy bar ?)
+        - detect entities enemies & life bubbles (already exists in late level)
+        - invisibility
+        - damage boost
+        - became smaller
+        - range attack (timer or limited munitions ?)
+- v1.2.0 :
+    - Add stars : small missions for each levels
+        - Finish level
+        - Don't take damage
+        - Don't heal
+    - Add rewards : mutations ? xp ? pets ?
+- v1.2.5 : 
+    - Auto load player's save when launch game
+- v1.3.0 : [Design update]
+    - Add visual effects :
+        - blur
+        - sunbeam
+        - bubble coming from the bottom of the screen
+        - giant sea creature at the background (blurry)
+- v1.4.0 :
+    - Add menus
+    - Add parameters screen :
+        - Methods of movement (arrows, mouse, joystick)
+        - Personalize game theme (colors of background, enemies, etc)
+        - Choose commands
+    - Add credits
+- v1.5.0 : 
+    - If player is afk for at least 1 min, player's bubble will move in circles
+- v1.6.0 :
+    - Add tutorials
+    - Add more transparency (interface, tutorials, etc)
+- v1.7.0 :
+    - Add mini-save : respawn if player dies but not full life
+- v1.8.0 : [Security update]
+    - Secure application (encryption, etc)
+- v1.9.0 :
+    - Add upgrades/mutations : upgrade player stats and skins
+- v1.9.8 : 
+    - Allow player to attack and defend themself neat the end of the game (against boss fight ?)
 - v1.9.9 : 
     - Make documentations
 - v2.0.0 : 
