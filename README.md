@@ -16,7 +16,15 @@ Language : Python
 ## Vocabulary :
 
 <!-- Complete vocabulary -->
-- term : definition
+- Player bubble : definition
+- Enemy : definition
+- Bubble of life : definition
+- Cell : definition
+- Eaten cell : definition
+- Level : definition
+- [later] Obstacles : definition
+- [later] Power : definition
+- [later] Mutation : definition
 
 ***
 ## Rules :
@@ -63,7 +71,6 @@ Language : Python
 ***
 ## Roadmap
 
-<!-- Complete versions (look in project versions/ -->
 - v0.0.1 : 
     - Create basic functions of the game
 - v0.1.0 : 
