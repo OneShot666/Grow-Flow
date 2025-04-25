@@ -15,22 +15,25 @@ Language : Python
 ***
 ## Vocabulary :
 
-<!-- Complete vocabulary -->
-- Player bubble : definition
-- Enemy : definition
-- Bubble of life : definition
-- Cell : definition
-- Eaten cell : definition
-- Level : definition
-- [later] Obstacles : definition
-- [later] Power : definition
-- [later] Mutation : definition
+- Player bubble : A circle on the center of the screen the player can move with the mouse
+- Enemy : Small red cell randomly moving in the map. Will pursue player if come too close. Will damage player when come to contact.
+- Bubble of life : Small green cell randomly moving in the map. Will flee player if come too close. Will heal player when come to contact.
+- Cell : Small white cell randomly moving in the map. Player will gain xp when come to contact. Become an eaten cell and stay in stomach.
+- Eaten cell : Very small cells moving inside player (on his "stomach"). Will appear after eating a cell.
+- Level : A part of this world, have its own size, color and depth.
+- [later] Obstacles : Bloc of dead cell corpses, can't be eaten but can be slighty push.
+- [later] Power : An ability player can use to help them during his journey.
+- [later] Mutation : A passive upgrade that permanently that boost player's characteristic.
 
 ***
 ## Rules :
 
-<!-- Complete rules -->
-- rule 1
+- Player can swim wherever they want as long as they stay in the level. (levels have borders)
+- Enemy make damage to player when collide with them, then disappear.
+- Bubble of life heal player when collide with them, then disappear.
+- Cell give player xp when collide with them, then are placed in their stomach.
+- Player must eat all cell to finish a level.
+- For now, automatically go to next level when the last cell is eaten.
 
 ***
 ## Prerequisites :
@@ -66,7 +69,12 @@ Language : Python
 - "name" (options) : result
 
 -Images-
-![name](images/screenshots/name.png)
+![Menu](images/screenshots/main_menu.png)
+![First level](images/screenshots/level_1_part_1.png)
+![First level](images/screenshots/level_1_part_2.png)
+![Second level](images/screenshots/level_2.png)
+![Third level](images/screenshots/level_3_part_1.png)
+![Third level](images/screenshots/level_3_part_2.png)
 
 ***
 ## Roadmap
