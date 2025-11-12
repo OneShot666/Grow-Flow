@@ -10,7 +10,6 @@ import pygame
 import sys
 import ast
 
-
 """ Documentation
 creator : One Shot
 name : Grow Flow
@@ -418,7 +417,7 @@ class Game:                                                                     
     def DisplayMapBorders(self):                                                # Display borders of the map
         self.window.blit(self.map_borders, self.camera_pos)
 
-    def DisplayArtefacts(self):                                                 # Display the artefacts
+    def DisplayArtefacts(self):                                                 # Display the artifacts
         self.DisplayGiant()
         self.DisplayWaveEffect()
         self.DisplayWaterThread()

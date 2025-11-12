@@ -1,5 +1,5 @@
 v0.5.0
 
 - Ajouter l'apparition des cellules, des bulles de vies et des enemies
-- Ajouter grossisement du joueur quand il mange une cellule
+- Ajouter grossissement du joueur quand il mange une cellule
 - Ajouter des cellules mangées qui bougent dans le joueur

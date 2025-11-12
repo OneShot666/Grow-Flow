@@ -1,8 +1,8 @@
 v1.5.0
 
-- Ajouter des effets (rendus plus réalistes):
+- Ajouter des effets (rendus plus réalistes) :
   Flou, rayons de lumière, bulles, géant
-- Ajouter un menu et des paramètres: choisir la
+- Ajouter un menu et des paramètres : choisir la
   méthode de déplacement, personnaliser les
   couleurs / les commandes, afficher les crédits
 - Faire bouger la bulle du joueur en cercles

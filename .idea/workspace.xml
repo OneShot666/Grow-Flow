@@ -5,10 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d392ac45-d9f0-491a-a223-9911601341b8" name="Changes" comment="Version v1.0.0">
+      <change beforePath="$PROJECT_DIR$/.idea/Grow Flow.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Grow Flow.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test1.py" beforeDir="false" afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/testception.py" beforeDir="false" afterPath="$PROJECT_DIR$/testception.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/OneShot.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/OneShot.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/saves/Player.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/Player.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/versions/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/versions/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/versions/v0.5.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v0.5.0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/versions/v0.8.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v0.8.0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/versions/v1.0.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v1.0.0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/versions/v1.2.5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v1.2.5.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/versions/v1.5.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v1.5.0.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/versions/v2.0.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v2.0.0.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,14 +39,12 @@
     &quot;state&quot;: &quot;OPEN&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="cb6525dc-275c-4952-9e1a-542658cbad42" />
-        <option name="url" value="https://github.com/OneShot666/Grow-Flow.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/OneShot666/Grow-Flow.git&quot;,
+    &quot;accountId&quot;: &quot;cb6525dc-275c-4952-9e1a-542658cbad42&quot;
+  }
+}</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
   </component>
@@ -58,49 +65,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "ignore.virus.scanning.warn.message": "true",
-    "last_opened_file_path": "C:/Matières 12 023/Python 12 023/Universe bracelets",
-    "run.code.analysis.last.selected.profile": "aDefault",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Python.main.executor&quot;: &quot;Run&quot;,
+    &quot;Python.testception.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Middle school/Matieres 12 023/Python 12 023/Grow Flow&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;aDefault&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Matières 12 023\Python 12 023\Grow Flow\fonts\unwanted_fonts" />
       <recent name="C:\Matières 12 023\Python 12 023\Grow Flow\fonts\uncomplete_fonts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test1">
-    <configuration name="Devine le nombre!" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Grow Flow" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Matières 12 023\Python 12 023\Grow Flow\venv\Scripts\python.exe" />
-      <option name="SDK_NAME" value="Python 3.11 (Grow Flow)" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../../../Matières 12 020/ISN 12 020/Programmes" />
-      <option name="IS_MODULE_SDK" value="false" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../../../Matières 12 020/ISN 12 020/Programmes/Devine le nombre!.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
+  <component name="RunManager" selected="Python.testception">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -123,6 +113,7 @@
     </configuration>
     <configuration name="grow flow" type="PythonConfigurationType" factoryName="Python">
       <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -143,8 +134,9 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="obstacle" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -156,7 +148,30 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/obstacle.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="player" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Matières 12 023\Python 12 023\Grow Flow\venv\Scripts\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11 (Grow Flow)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/player.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -167,6 +182,7 @@
     </configuration>
     <configuration name="test1" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -189,6 +205,7 @@
     </configuration>
     <configuration name="test2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -211,6 +228,7 @@
     </configuration>
     <configuration name="testception" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -233,21 +251,28 @@
     </configuration>
     <list>
       <item itemvalue="Python.grow flow" />
+      <item itemvalue="Python.main" />
+      <item itemvalue="Python.player" />
       <item itemvalue="Python.test1" />
-      <item itemvalue="Python.Devine le nombre!" />
-      <item itemvalue="Python.obstacle" />
       <item itemvalue="Python.test2" />
       <item itemvalue="Python.testception" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.testception" />
+        <item itemvalue="Python.main" />
+        <item itemvalue="Python.player" />
         <item itemvalue="Python.test1" />
         <item itemvalue="Python.test2" />
-        <item itemvalue="Python.testception" />
-        <item itemvalue="Python.obstacle" />
-        <item itemvalue="Python.Devine le nombre!" />
       </list>
     </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-d9fa9deec7cb-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.23892.515" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
