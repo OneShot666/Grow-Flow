@@ -14,34 +14,48 @@ Language : Python
 
 ***
 ## Vocabulary :
+![First level](img/screenshots/level_1_part_1.png)
 
-<!-- Complete vocabulary -->
-- term : definition
+- Player bubble : A circle on the center of the screen the player can move with the mouse
+- Enemy : Small red cell randomly moving in the map. Will pursue player if come too close. Will damage player when come to contact.
+- Bubble of life : Small green cell randomly moving in the map. Will flee player if come too close. Will heal player when come to contact.
+- Cell : Small white cell randomly moving in the map. Player will gain xp when come to contact. Become an eaten cell and stay in stomach.
+- Eaten cell : Very small cells moving inside player (on his "stomach"). Will appear after eating a cell.
+- Level : A part of this world, have its own size, color and depth.
+- [later] Obstacles : Bloc of dead cell corpses, can't be eaten but can be slighty push.
+- [later] Power : An ability player can use to help them during his journey.
+- [later] Mutation : A passive upgrade that permanently that boost player's characteristic.
 
 ***
 ## Rules :
+![First level](img/screenshots/level_1_part_2.png)
 
-<!-- Complete rules -->
-- rule 1
+- Player can swim wherever they want as long as they stay in the level. (levels have borders)
+- Enemy make damage to player when collide with them, then disappear.
+- Bubble of life heal player when collide with them, then disappear.
+- Cell give player xp when collide with them, then are placed in their stomach.
+- Player must eat all cell to finish a level.
+- For now, automatically go to next level when the last cell is eaten.
 
 ***
 ## Prerequisites :
+![Second level](img/screenshots/level_2.png)
 
 - Python 3.11.1 or below
 - Python interpreter
-<!-- Complete libraries -->
 - Librairies :
-    - ast : Use to 
+    - ast : Use to manipulate data type for colors.
     - math : Use to make mathematical operations.
-    - mutagen : Use to 
+    - mutagen : Use to get music length.
     - os : Use to access files and create directories and files.
     - pygame : Use to manage the whole program interface.
-    - random : Use to 
-    - sys : Use to
-    - time : Use to 
+    - random : Use to randomly chooses items in lists.
+    - sys : Use to safely do system related actions.
+    - time : Use to manipulate time related data.
 
 ***
 ## Installation guide
+![Third level](img/screenshots/level_3_part_1.png)
 
 - Click on the green "<> Code" button
 - On Local/SSH/, click on "Download as zip"
@@ -54,16 +68,19 @@ Language : Python
 ## User guide
 
 #### Methods
-<!-- Complete methods -->
-- "name" (options) : result
+- "Connect" : Player can enter their pseudonyme in an input box at the launch of the game.
+![Menu](img/screenshots/main_menu.png)
+- [MOUSE] "Moving" : Player's cell can move along the level by following mouse.
+- "Eat/Heal/take damage" : Automatically apply effect of different cells when collide with player.
+- "Next level" : Automatically go to next level after eaten the last cell in the current level.
+- "Die" : If player has no more hp, will automatically go back to main menu.
 
 -Images-
-![name](images/screenshots/name.png)
 
 ***
 ## Roadmap
+![Third level](img/screenshots/level_3_part_2.png)
 
-<!-- Complete versions (look in project versions/ -->
 - v0.0.1 : 
     - Create basic functions of the game
 - v0.1.0 : 
@@ -92,46 +109,62 @@ Language : Python
     - Close game when player die (will be change later by returning to main menu)
 - v0.8.0 : 
     - Add auto saves
-    - 
-    - Ajouter sauvegardess automatiques
-    - Ajouter met à jour le jeu via une sauvegarde
+    - Add update game with saves data (player's name, etc)
 - v0.9.0 : 
-    - Ajouter afficher le nom du joueur à l'écran
-    - Ajouter demander le nom du joueur via interface
+    - Display player's name above themselves
+    - Ask player's name when launch game
 - v1.0.0 : 
-    - Régler le léger problème de collisions pour les cellules mangées par le joueur
-    - Enlever les fonctions et variables en rapport avec le changement de taille de l'écran et la disparition dans le titre
-    - Remplacer les commentaires en anglais
-    - Ajouter une documentation
-- v1.1.0 : Add random obstacles
-- v1.1.5 : Player powers: speed, detect enemies / life bubbles, invisibility (timer), damage, ...
-- v1.2.0 : Add star (small missions) pour les levels + rewards (mutations)
+    - Fix collision problem for eaten cells inside player
+    - Remove objects related to changing screen size and making title disappear
+    - Rewrite comments in english
+    - Add documentation
+- v1.0.5 : [In production]
+    - Optimize larger levels (old version make them lag) : background is now a single image (might be a file too big)
+    - Make enemies stronger as player goes through levels (increase speed, range, damage, or size) → random upgrade(s)
+- v1.1.0 : 
+    - Add random obstacles
+- v1.1.5 :
+    - Add temporary powers for player :
+        - speed boost (add energy bar ?)
+        - detect entities enemies & life bubbles (already exists in late level)
+        - invisibility
+        - damage boost
+        - became smaller
+        - range attack (timer or limited munitions ?)
+- v1.2.0 :
+    - Add stars : small missions for each levels
+        - Finish level
+        - Don't take damage
+        - Don't heal
+    - Add rewards : mutations ? xp ? pets ?
 - v1.2.5 : 
-    - Retirer les éléments qui font laguer (optimisation de la vitesse du jeu)
-    - Equilibrer le jeu: Reduction de la taille des niveaux, diminution du nombre de cellules
-    - Rendre les ennemis plus fort au fur et à mesure des niveaux: vitesse, portée de détection, dégâts, taille, ...
-    - Ajouter des obstacles aléatoires
-    - Ajouter les fonctionnalités de pouvoir du joueur: vitesse, détection des autres bulles, dégâts, invisibilité, ...
-    - Ajouter des buts pour les niveaux: finir le niveaux, ne pas prendre de dégâts, ne pas se soigner, ...
-    - Ajouter des récompenses pour chaque but atteint
-    - Ajouter charger la partie du joueur quand il lance une partie
-- v1.3.0 : Add effects (flou, rayons, bulles, creatures au fond ?)
-- v1.4.0 : Add menus + parameters (choose manière de bouger, de changer fond, Commandes, Credits, ...)
+    - Auto load player's save when launch game
+- v1.3.0 : [Design update]
+    - Add visual effects :
+        - blur
+        - sunbeam
+        - bubble coming from the bottom of the screen
+        - giant sea creature at the background (blurry)
+- v1.4.0 :
+    - Add menus
+    - Add parameters screen :
+        - Methods of movement (arrows, mouse, joystick)
+        - Personalize game theme (colors of background, enemies, etc)
+        - Choose commands
+    - Add credits
 - v1.5.0 : 
-    - Ajouter des effets (rendus plus réalistes): Flou, rayons de lumière, bulles, géant
-    - Ajouter un menu et des paramètres: choisir la méthode de déplacement, personnaliser les couleurs / les commandes, afficher les crédits
-    - Faire bouger la bulle du joueur en cercles si le joueur est afk
-    - Rendre les ui plus transparentes
-    - Ajouter des tutoriels
-- v1.6.0 : Add tutorials + transparences (add to UI)
-- v1.7.0 : Add respawn if player dies (mini-save + gain de vie si blessé)
-- v1.8.0 : Secure game (boucles, fichiers chiffrés pour data, ...)
-- v1.9.0 : Add upgrades (player stats + skins)
+    - If player is afk for at least 1 min, player's bubble will move in circles
+- v1.6.0 :
+    - Add tutorials
+    - Add more transparency (interface, tutorials, etc)
+- v1.7.0 :
+    - Add mini-save : respawn if player dies but not full life
+- v1.8.0 : [Security update]
+    - Secure application (encryption, etc)
+- v1.9.0 :
+    - Add upgrades/mutations : upgrade player stats and skins
 - v1.9.8 : 
-    - Ajouter réapparaître le joueur s'il meurt : ajouter des mini-sauvegardes, gain de vie
-    - Sécuriser le code du jeu : vérifier les boucles, chiffrer les fichiers, ...
-    - Ajouter des améliorations pour le joueur : caractéristiques, skins, ...
-    - Permettre au joueur d'attaquer et de se défendre
+    - Allow player to attack and defend themselves neat the end of the game (against boss fight ?)
 - v1.9.9 : 
     - Make documentations
 - v2.0.0 : 
@@ -148,4 +181,4 @@ Language : Python
 ***
 **Contact : mir.nathan666@gmail.com**
 
-Feel free to share your experience and your suggestions !
+Feel free to share your exprerience and your suggestions !

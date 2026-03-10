@@ -1,11 +1,11 @@
-from math import sqrt, atan2, cos, sin
 from random import choice
-from time import time, strftime, gmtime
-from os import path, getcwd, listdir
 from mutagen.mp3 import MP3
+from os import path, getcwd, listdir
+from math import sqrt, atan2, cos, sin
+from time import time, strftime, gmtime
+from bubble import Bubble, LifeBubble, Enemy, CellEaten
 from player import Player
 from level import Level
-from bubble import Bubble, LifeBubble, Enemy, CellEaten
 import pygame
 import sys
 import ast
@@ -23,7 +23,7 @@ requirements : libraries 'math', 'random', 'time', 'os', 'mutagen', 'pygame', 's
 """
 
 
-# ! [1.1.0] Add obstacles (random) ?
+# . [1.1.0] Add obstacles (random) ?
 # ! [1.1.5] Player powers: speed, detect enemies / life bubbles, invisibility (timer), damage, ...
 # ! [1.2.0] Add star (small missions) pour les levels + rewards (mutations)
 # ! [1.2.5] Add load player's game when launching level (! if life = 0)
@@ -37,17 +37,10 @@ requirements : libraries 'math', 'random', 'time', 'os', 'mutagen', 'pygame', 's
 # ! [2.0.0] Add player attack + power (in certain level)
 class Game:                                                                     # Main class of the game
     def __init__(self):
+        # Initializers
         pygame.init()
         pygame.display.init()
         pygame.mixer.init()
-        # Booleans data
-        self.running = True
-        self.menuing = True                                                     # ! [later] Add in the menu
-        self.playing = False                                                    # ! [later] Use when playing (with menu)
-        self.asking_name = True
-        self.play_pausing = False
-        self.music_pausing = False
-        self.muting = False
         # Game data
         self.game_name = "Grow Flow"
         self.creator = "One Shot"
@@ -56,10 +49,18 @@ class Game:                                                                     
                            "Survive and explore this fantasy world. Grow and develop your abilities to " \
                            "go ever deeper into the adventure!"
         self.music_composer = "The Crew : Mission Deep Sea"
-        print(f"Bienvenue sur {self.game_name} ! ({self.version})\n")           # !! Remove when full on screen
+        print(f"Welcome on {self.game_name} ! ({self.version})\n")           # !! Remove when full on screen
+        # Booleans data
+        self.running = True
+        self.menuing = True                                                     # ! [later] Add in the menu
+        self.playing = False                                                    # ! [later] Use when playing (with menu)
+        self.asking_name = True
+        self.play_pausing = False
+        self.music_pausing = False
+        self.muting = False
         # Icons data
         pygame.display.set_caption(self.game_name)                              # Game name
-        self.icon = pygame.image.load("images/icon.png")                        # Game icon
+        self.icon = pygame.image.load("img/icon.png")                        # Game icon
         self.icon.set_colorkey((255, 255, 255))                                 # Remove white background
         self.icon = pygame.transform.scale(self.icon, (32, 32))
         pygame.display.set_icon(self.icon)                                      # Set icon
@@ -180,7 +181,7 @@ class Game:                                                                     
     def LoadComposants(self):                                                   # Load the composants of the game
         print(f"Chargement des composants du jeu en cours...")
         start_load_time = time()
-        self.title_image = pygame.image.load(f"images/title.png")
+        self.title_image = pygame.image.load(f"img/title.png")
         title_size = self.title_image.get_size()
         new_title_height = int(self.screen_size[0] * 0.25 / title_size[0] * title_size[1])
         self.title_image = pygame.transform.scale(self.title_image, (self.screen_size[0] * 0.25, new_title_height))
@@ -191,7 +192,7 @@ class Game:                                                                     
         self.map_size = self.Levels[self.level_index].map_size
         NO_pos = (int(self.screen_size[0] * 0.5), int(self.screen_size[1] * 0.5))
         self.map_borders_pos = (NO_pos[0], NO_pos[1], NO_pos[0] + self.map_size[0], NO_pos[1] + self.map_size[1])
-        self.background_image = pygame.image.load(f"images/background.png")
+        self.background_image = pygame.image.load(f"img/background.png")
         self.background_image = pygame.transform.scale(self.background_image, self.map_size)
         self.background_size = [self.map_size[0] + self.screen_size[0], self.map_size[1] + self.screen_size[1]]
         self.set_background()

@@ -5,19 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d392ac45-d9f0-491a-a223-9911601341b8" name="Changes" comment="Version v1.0.0">
-      <change beforePath="$PROJECT_DIR$/.idea/Grow Flow.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Grow Flow.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/background.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/background.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/icon.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/icon.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/perso.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/perso.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/player.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/player.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/player1.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/player1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/screenshots/level_1_part_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/screenshots/level_1_part_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/screenshots/level_1_part_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/screenshots/level_1_part_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/screenshots/level_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/screenshots/level_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/screenshots/level_3_part_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/screenshots/level_3_part_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/screenshots/level_3_part_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/screenshots/level_3_part_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/screenshots/main_menu.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/screenshots/main_menu.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/title.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/title.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/saves/OneShot.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/OneShot.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/saves/Player.txt" beforeDir="false" afterPath="$PROJECT_DIR$/saves/Player.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test1.py" beforeDir="false" afterPath="$PROJECT_DIR$/test1.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/versions/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/versions/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/versions/v0.5.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v0.5.0.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/versions/v0.8.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v0.8.0.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/versions/v1.0.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v1.0.0.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/versions/v1.2.5.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v1.2.5.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/versions/v1.5.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v1.5.0.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/versions/v2.0.0.txt" beforeDir="false" afterPath="$PROJECT_DIR$/versions/v2.0.0.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +91,7 @@
       <recent name="C:\Matières 12 023\Python 12 023\Grow Flow\fonts\uncomplete_fonts" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.testception">
+  <component name="RunManager" selected="Python.main">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="Grow Flow" />
       <option name="ENV_FILES" value="" />
@@ -102,6 +106,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -125,6 +130,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -148,6 +154,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -171,6 +178,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/player.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -194,6 +202,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test1.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -217,6 +226,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test2.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -240,6 +250,7 @@
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/testception.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
@@ -259,8 +270,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.testception" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.testception" />
         <item itemvalue="Python.player" />
         <item itemvalue="Python.test1" />
         <item itemvalue="Python.test2" />
@@ -270,7 +281,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-python-sdk-d9fa9deec7cb-d902c0275401-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-252.23892.515" />
+        <option value="bundled-python-sdk-dd10acb83ddd-d0d357532b9e-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-253.29346.46" />
       </set>
     </attachedChunks>
   </component>

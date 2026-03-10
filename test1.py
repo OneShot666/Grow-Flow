@@ -60,7 +60,7 @@ class Game:
     def launch_level_1(self):                               # Bubble bumping at the edges of the window
         # Chargement de l'image
         player_size = 100
-        image = pygame.image.load(f"images/player1.png")  # Remplacez "image.png" par le chemin de votre image
+        image = pygame.image.load(f"img/player1.png")  # Remplacez "image.png" par le chemin de votre image
         image = pygame.transform.scale(image, (player_size, player_size))
         # image_mask = pygame.mask.from_surface(image)
 
