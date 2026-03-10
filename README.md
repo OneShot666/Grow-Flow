@@ -14,7 +14,7 @@ Language : Python
 
 ***
 ## Vocabulary :
-![First level](images/screenshots/level_1_part_1.png)
+![First level](img/screenshots/level_1_part_1.png)
 
 - Player bubble : A circle on the center of the screen the player can move with the mouse
 - Enemy : Small red cell randomly moving in the map. Will pursue player if come too close. Will damage player when come to contact.
@@ -28,7 +28,7 @@ Language : Python
 
 ***
 ## Rules :
-![First level](images/screenshots/level_1_part_2.png)
+![First level](img/screenshots/level_1_part_2.png)
 
 - Player can swim wherever they want as long as they stay in the level. (levels have borders)
 - Enemy make damage to player when collide with them, then disappear.
@@ -39,7 +39,7 @@ Language : Python
 
 ***
 ## Prerequisites :
-![Second level](images/screenshots/level_2.png)
+![Second level](img/screenshots/level_2.png)
 
 - Python 3.11.1 or below
 - Python interpreter
@@ -55,7 +55,7 @@ Language : Python
 
 ***
 ## Installation guide
-![Third level](images/screenshots/level_3_part_1.png)
+![Third level](img/screenshots/level_3_part_1.png)
 
 - Click on the green "<> Code" button
 - On Local/SSH/, click on "Download as zip"
@@ -69,7 +69,7 @@ Language : Python
 
 #### Methods
 - "Connect" : Player can enter their pseudonyme in an input box at the launch of the game.
-![Menu](images/screenshots/main_menu.png)
+![Menu](img/screenshots/main_menu.png)
 - [MOUSE] "Moving" : Player's cell can move along the level by following mouse.
 - "Eat/Heal/take damage" : Automatically apply effect of different cells when collide with player.
 - "Next level" : Automatically go to next level after eaten the last cell in the current level.
@@ -79,7 +79,7 @@ Language : Python
 
 ***
 ## Roadmap
-![Third level](images/screenshots/level_3_part_2.png)
+![Third level](img/screenshots/level_3_part_2.png)
 
 - v0.0.1 : 
     - Create basic functions of the game
