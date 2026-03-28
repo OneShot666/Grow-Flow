@@ -1,10 +1,15 @@
 from app import Game
 import asyncio
 
+print("1. Importations terminées")
+
 
 async def start_game():
+    print("2. Démarrage de start_game")
     app = Game()
-    await app.Run()
+    print("3. Objet Game créé, lancement de run...")
+    await app.run()
 
 if __name__ == "__main__":
+    print("0. Script lancé")
     asyncio.run(start_game())
