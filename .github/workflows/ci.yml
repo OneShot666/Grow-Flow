@@ -22,9 +22,9 @@ jobs:
 
       - name: Build Web Version
         run: |
-          # Remplace 'main.py' par le nom de ton fichier principal
-          # --build crée le dossier web statique
-          python -m pygbag --build --no_terminal .
+          # On utilise --build pour générer les fichiers statiques
+          # On retire --no_terminal qui cause l'erreur
+          python -m pygbag --build .
 
       - name: Deploy Grow Flow to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
