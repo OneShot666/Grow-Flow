@@ -11,7 +11,7 @@ class Level:                                                                    
         self.color_name = color_name
         self.color = self.CheckColorValue(color)
         self.start_color, self.end_color = self.setStartEndColors(self.color)
-        self.music_name = f"musics/{self.color_name}.mp3" if music_name is None else f"musics/{music_name}.mp3"
+        self.music_name = f"musics/{self.color_name}.ogg" if music_name is None else f"musics/{music_name}.ogg"
         self.nb_cells = int(100 + self.depth * 20)
         self.nb_cells_max = self.nb_cells
         self.nb_enemy = int(self.depth * 10)

@@ -35,10 +35,10 @@ class Bubble(pygame.sprite.Sprite):
         self.rect.x = self.set_position_x() if x == 0 else x
         self.rect.y = self.set_position_y() if y == 0 else y
 
-        self.spawner_sound = pygame.mixer.Sound(f"sounds/bubbles_spawner.mp3")
+        self.spawner_sound = pygame.mixer.Sound(f"sounds/bubbles_spawner.ogg")
         self.spawner_sound.set_volume(0.8)
         # self.spawner_sound.play()
-        self.death_sound = pygame.mixer.Sound(f"sounds/pop.mp3")                # ! Move in Player
+        self.death_sound = pygame.mixer.Sound(f"sounds/pop.ogg")                # ! Move in Player
         self.death_sound.set_volume(0.8)
 
     @staticmethod

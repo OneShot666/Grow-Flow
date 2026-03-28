@@ -1,5 +1,4 @@
 from random import choice
-from mutagen.mp3 import MP3
 from os import path, getcwd, listdir
 from math import sqrt, atan2, cos, sin
 from time import time, strftime, gmtime
@@ -106,7 +105,7 @@ class Game:                                                                     
         self.color_black = (0, 0, 0)
         self.color_transparent = (0, 0, 0, 0)
         # Musics data
-        self.music_name = f"musics/subnautica.mp3"
+        self.music_name = f"musics/subnautica.ogg"
         self.music_pos = 0
         self.music_lenght = 0
         self.play_mode = -1
@@ -118,13 +117,13 @@ class Game:                                                                     
         self.sound_bar_height_percent = 0.15                                    # In percent
         self.sound_bar_width = 5                                                # In pixels
         # Sounds data
-        self.bg_sound = pygame.mixer.Sound(f"sounds/deep_bubbles.mp3")
+        self.bg_sound = pygame.mixer.Sound(f"sounds/deep_bubbles.ogg")
         self.bg_sound.set_volume(0.1)
-        self.bubbling_sound = pygame.mixer.Sound(f"sounds/bubbling.mp3")
+        self.bubbling_sound = pygame.mixer.Sound(f"sounds/bubbling.ogg")
         self.bubbling_sound.set_volume(0.2)
-        self.low_bubbling_sound = pygame.mixer.Sound(f"sounds/low_bubbling.mp3")
+        self.low_bubbling_sound = pygame.mixer.Sound(f"sounds/low_bubbling.ogg")
         self.low_bubbling_sound.set_volume(0.3)
-        self.wrong_pseudo_sound = pygame.mixer.Sound(f"sounds/wrong_pseudo.mp3")
+        self.wrong_pseudo_sound = pygame.mixer.Sound(f"sounds/wrong_pseudo.ogg")
         self.wrong_pseudo_sound.set_volume(0.5)
         # Timers data
         self.time_playing = time()
@@ -197,7 +196,7 @@ class Game:                                                                     
         self.background_image = pygame.transform.scale(self.background_image, self.map_size)
         self.background_size = [self.map_size[0] + self.screen_size[0], self.map_size[1] + self.screen_size[1]]
         self.set_background()
-        self.music_name = f"musics/{self.color_name_bg}.mp3"
+        self.music_name = f"musics/{self.color_name_bg}.ogg"
         self.LoadMapBorders()
         self.player = Player(map_borders=self.map_borders_pos, screen_size=self.screen_size)
         self.pseudonyme = self.player.name
@@ -593,7 +592,7 @@ class Game:                                                                     
             self.map_borders_pos = (NO_pos[0], NO_pos[1], NO_pos[0] + self.map_size[0], NO_pos[1] + self.map_size[1])
             self.background_size = [self.map_size[0] + self.screen_size[0], self.map_size[1] + self.screen_size[1]]
             self.set_background()                                               # Update gradient bg
-            self.music_name = f"musics/{self.color_name_bg}.mp3"
+            self.music_name = f"musics/{self.color_name_bg}.ogg"
             pygame.mixer.music.load(self.music_name)                            # Update music
             pygame.mixer.music.rewind()                                         # Change current played music
             self.LoadMapBorders()                                               # Update map borders
@@ -603,8 +602,7 @@ class Game:                                                                     
 
     def MusicManager(self):                                                     # Change music based on card
         if not self.music_pausing:
-            song_mutagen = MP3(self.music_name)                                 # Load current music data
-            self.music_lenght = song_mutagen.info.length                        # Get song lenght (in sec)
+            self.music_lenght = pygame.mixer.Sound(self.music_name).get_length()# Get song lenght (in sec)
             if pygame.mixer.music.get_busy():
                 self.music_pos = pygame.mixer.music.get_pos() // 1000
 
@@ -625,7 +623,7 @@ class Game:                                                                     
         song_duration_text = self.middle_font.render(f"{song_position_format} / {song_lenght_format}", True, self.color_white)
         duration_size = song_duration_text.get_size()
         # Song name
-        song_name = self.music_name.replace(".mp3", "").replace("musics/", "").capitalize()
+        song_name = self.music_name.replace(".ogg", "").replace("musics/", "").capitalize()
         song_title_text = self.middle_font.render(f"{song_name}", True, self.color_white)
         title_size = song_title_text.get_size()
         gap = 15
@@ -723,7 +721,7 @@ class Game:                                                                     
         self.color_bg_end = self.Levels[self.level_index].end_color
         self.map_size = self.Levels[self.level_index].map_size
         self.set_background()
-        self.music_name = f"musics/{self.color_name_bg}.mp3"
+        self.music_name = f"musics/{self.color_name_bg}.ogg"
         self.LoadMapBorders()                                                   # ! Pb for levels (default size at start)
         self.player.map_borders = self.map_borders_pos
         self.LoadBubbles()

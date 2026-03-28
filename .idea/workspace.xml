@@ -5,7 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d392ac45-d9f0-491a-a223-9911601341b8" name="Changes" comment="Version v1.0.0">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/ci.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/ci.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/black.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/blue.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/brown.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/cyan.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/green.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/nightblue.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/orange.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/pink.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/purple.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/red.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/subnautica.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/white.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/musics/yellow.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/bubbles_spawner.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/bubbling.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/deep_bubbles.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/low_bubbling.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/pop.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/pops.mp3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sounds/wrong_pseudo.mp3" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +79,7 @@
   "keyToString": {
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Python.app.executor": "Run",
     "Python.main.executor": "Run",
     "Python.testception.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
@@ -101,6 +124,31 @@
       <option name="DEBUG_JUST_MY_CODE" value="true" />
       <option name="RUN_TOOL" value="" />
       <option name="SCRIPT_NAME" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="app" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Grow Flow" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Matières 12 023\Python 12 023\Grow Flow\venv\Scripts\python.exe" />
+      <option name="SDK_NAME" value="Python 3.11 (Grow Flow)" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="true" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -209,31 +257,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="Grow Flow" />
-      <option name="ENV_FILES" value="" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="C:\Matières 12 023\Python 12 023\Grow Flow\venv\Scripts\python.exe" />
-      <option name="SDK_NAME" value="Python 3.11 (Grow Flow)" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="DEBUG_JUST_MY_CODE" value="true" />
-      <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test2.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="testception" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Grow Flow" />
       <option name="ENV_FILES" value="" />
@@ -261,19 +284,19 @@
     </configuration>
     <list>
       <item itemvalue="Python.grow flow" />
+      <item itemvalue="Python.app" />
       <item itemvalue="Python.main" />
       <item itemvalue="Python.player" />
       <item itemvalue="Python.test1" />
-      <item itemvalue="Python.test2" />
       <item itemvalue="Python.testception" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.app" />
         <item itemvalue="Python.testception" />
         <item itemvalue="Python.player" />
         <item itemvalue="Python.test1" />
-        <item itemvalue="Python.test2" />
       </list>
     </recent_temporary>
   </component>
