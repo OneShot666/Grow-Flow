@@ -71,9 +71,14 @@ class Game:                                                                     
         self.camera_pos = [0, 0]
         self.fps = 30                                                           # Image per second
         # Screen data
-        screen_info = pygame.display.Info()
-        self.screen_size = [screen_info.current_w, screen_info.current_h]       # Default : full screen
-        self.window = pygame.display.set_mode(self.screen_size)                 # Display window with chosen size
+        is_web = sys.platform == "emscripten"                                   # If on web
+        if is_web:
+            self.screen_size = [1920, 1080]                                     # Web friendly
+            self.window = pygame.display.set_mode(self.screen_size)             # Display window with chosen size
+        else:
+            screen_info = pygame.display.Info()
+            self.screen_size = [screen_info.current_w, screen_info.current_h]   # Default : full screen
+            self.window = pygame.display.set_mode(self.screen_size, pygame.FULLSCREEN)
         # Images data
         self.title_image = None
         self.background_image = None                                            # ! Modify for unique color by level ?
@@ -175,7 +180,7 @@ class Game:                                                                     
         self.nb_life_bubbles_max = 0
         self.nb_enemies_max = 0
         # Main functions
-        self.LoadComposants()                                                   # Set None variables and stuff
+        # self.LoadComposants()                                                   # Set None variables and stuff
         # self.Run()
 
     def LoadComposants(self):                                                   # Load the composants of the game
@@ -268,6 +273,10 @@ class Game:                                                                     
         print(f"Chargement des artéfacts terminé !")
 
     async def Run(self):                                                        # Manage the game
+        await asyncio.sleep(0)                                                  # For browser to validate window format
+
+        self.LoadComposants()                                                   # Set None variables and stuff
+
         while self.running:
             self.DisplayManager()
 
