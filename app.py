@@ -1,10 +1,12 @@
-from random import choice
-from os import path, getcwd, listdir
+# from random import choice
+# from os import path, getcwd, listdir
+from os import path
 from math import sqrt, atan2, cos, sin
 from time import time, strftime, gmtime
 from bubble import Bubble, LifeBubble, Enemy, CellEaten
 from player import Player
 from level import Level
+# pygame-ce
 import asyncio
 import pygame
 import sys
@@ -182,9 +184,9 @@ class Game:                                                                     
         title_size = self.title_image.get_size()
         new_title_height = int(self.screen_size[0] * 0.25 / title_size[0] * title_size[1])
         self.title_image = pygame.transform.scale(self.title_image, (self.screen_size[0] * 0.25, new_title_height))
-        if self.is_web:
-            self.Fonts = [_ for _ in listdir(f"{getcwd()}/fonts") if _.endswith(".ttf")]  # Get fonts
-            self.font_name = choice(self.Fonts)                                 # Random font
+        # if self.is_web:                                                       # L Add later to see if it works
+        #     self.Fonts = [_ for _ in listdir(f"{getcwd()}/fonts") if _.endswith(".ttf")]  # Get fonts
+        #     self.font_name = choice(self.Fonts)                                 # Random font
         self.LoadInitVariables()
         self.CreateLevels()
         self.color_name_bg = self.Levels[self.level_index].color_name
@@ -296,7 +298,7 @@ class Game:                                                                     
         print(f"Chargement des artéfacts terminé !")
 
     async def Run(self):                                                        # Manage the game
-        await asyncio.sleep(0)                                                  # For browser to validate window format
+        if self.is_web: await asyncio.sleep(1)                                  # For browser to validate window format
 
         self.LoadComposants()                                                   # Set None variables and stuff
 
