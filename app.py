@@ -61,13 +61,7 @@ class Game:                                                                     
         self.muting =           False                                           # For music
         # Icons data
         pygame.display.set_caption(self.game_name)                              # Game name
-        if self.is_web:
-            self.icon = None                                                    # Don't load here on web
-        else:
-            self.icon = pygame.image.load("img/icon.png")                       # Game icon
-            self.icon.set_colorkey((255, 255, 255))                             # Remove white background
-            self.icon = pygame.transform.scale(self.icon, (32, 32))
-            pygame.display.set_icon(self.icon)                                  # Set icon
+        self.icon = None                                                        # Don't load here if on web
         # Gameplay data
         # self.path = getcwd()                                                    # Current path
         self.horloge = pygame.time.Clock()                                      # Manage the fps
@@ -78,7 +72,7 @@ class Game:                                                                     
         if self.is_web:
             # self.screen_size = [1920, 1080]                                     # ! Too big for now
             self.screen_size = [1280, 720]                                      # Web friendly size
-            self.window = pygame.display.set_mode(self.screen_size)             # Display window with chosen size
+            self.window = pygame.display.set_mode(self.screen_size, pygame.SCALED)  # Display window with chosen size
         else:
             screen_info = pygame.display.Info()
             self.screen_size = [screen_info.current_w, screen_info.current_h]   # Default : full screen
@@ -87,21 +81,18 @@ class Game:                                                                     
         self.title_image = None
         self.background_image = None                                            # ! Modify for unique color by level ?
         # Fonts data
-        if self.is_web:
-            self.font_name = "Black Bubble.ttf"                                 # Choose one
-        else:
-            self.Fonts = [_ for _ in listdir(f"{getcwd()}/fonts") if _.endswith(".ttf")]  # Get fonts
-            self.font_name = choice(self.Fonts)                                     # Random font
+        self.Fonts = []
+        self.font_name = "Black Bubble.ttf"                                     # Default font
         self.giant_font_size =  100
         self.big_font_size =    50
         self.middle_font_size = 25
         self.small_font_size =  20
         self.mini_font_size =   10
-        self.giant_font =   None if self.is_web else pygame.font.Font(f"fonts/{self.font_name}", self.giant_font_size)
-        self.big_font =     None if self.is_web else pygame.font.Font(f"fonts/{self.font_name}", self.big_font_size)
-        self.middle_font =  None if self.is_web else pygame.font.Font(f"fonts/{self.font_name}", self.middle_font_size)
-        self.small_font =   None if self.is_web else pygame.font.Font(f"fonts/{self.font_name}", self.small_font_size)
-        self.mini_font =    None if self.is_web else pygame.font.Font(f"fonts/{self.font_name}", self.mini_font_size)
+        self.giant_font =   None
+        self.big_font =     None
+        self.middle_font =  None
+        self.small_font =   None
+        self.mini_font =    None
         # Colors data
         self.Color_names = ["blue", "green", "cyan", "orange", "red", "pink",
             "purple", "nightblue", "black", "brown", "yellow", "white"]
@@ -129,32 +120,17 @@ class Game:                                                                     
         self.sound_bar_height_percent = 0.15                                    # In percent
         self.sound_bar_width = 5                                                # In pixels
         # Sounds data
-        if self.is_web:
-            self.bg_sound =             None
-            self.bubbling_sound =       None
-            self.low_bubbling_sound =   None
-            self.wrong_pseudo_sound =   None
-        else:
-            self.bg_sound =             pygame.mixer.Sound(f"sounds/deep_bubbles.ogg")
-            self.bg_sound.set_volume(0.1)
-            self.bubbling_sound =       pygame.mixer.Sound(f"sounds/bubbling.ogg")
-            self.bubbling_sound.set_volume(0.2)
-            self.low_bubbling_sound =   pygame.mixer.Sound(f"sounds/low_bubbling.ogg")
-            self.low_bubbling_sound.set_volume(0.3)
-            self.wrong_pseudo_sound =   pygame.mixer.Sound(f"sounds/wrong_pseudo.ogg")
-            self.wrong_pseudo_sound.set_volume(0.5)
+        self.bg_sound =             None
+        self.bubbling_sound =       None
+        self.low_bubbling_sound =   None
+        self.wrong_pseudo_sound =   None
         # Timers data
         self.time_playing = time()
         self.time_now = time()
         self.last_time_something = 0                                            # [later] Keep for possible timer
         self.delay_something = 5                                                # [later] //
         # Menu pause data
-        if self.is_web:
-            self.paused_glass = None
-        else:
-            self.paused_glass = pygame.Surface(self.screen_size, pygame.SRCALPHA)
-            pygame.draw.rect(self.paused_glass, self.color_white, self.paused_glass.get_rect())
-            self.paused_glass.set_alpha(120)
+        self.paused_glass = None
         # Ask Name UI Data
         self.ask_box_size = [320, 200]
         self.ask_box_width = 20
@@ -196,17 +172,20 @@ class Game:                                                                     
         self.nb_life_bubbles_max = 0
         self.nb_enemies_max = 0
         # Main functions
-        # self.LoadComposants()                                                   # Set None variables and stuff
+        # self.LoadComposants()
         # self.Run()
 
-    def LoadComposants(self):                                                   # Load the composants of the game
+    def LoadComposants(self):                                                   # Load composants of the game
         print(f"Chargement des composants du jeu en cours...")
         start_load_time = time()
         self.title_image = pygame.image.load(f"img/title.png")
         title_size = self.title_image.get_size()
         new_title_height = int(self.screen_size[0] * 0.25 / title_size[0] * title_size[1])
         self.title_image = pygame.transform.scale(self.title_image, (self.screen_size[0] * 0.25, new_title_height))
-        if self.is_web: self.LoadInitVariables()
+        if self.is_web:
+            self.Fonts = [_ for _ in listdir(f"{getcwd()}/fonts") if _.endswith(".ttf")]  # Get fonts
+            self.font_name = choice(self.Fonts)                                 # Random font
+        self.LoadInitVariables()
         self.CreateLevels()
         self.color_name_bg = self.Levels[self.level_index].color_name
         self.color_bg_start = self.Levels[self.level_index].start_color
@@ -228,7 +207,7 @@ class Game:                                                                     
         loading_time = round(end_load_time - start_load_time, 3)
         print(f"Chargement des composants du jeu terminé ! ({loading_time} sec)\n")
 
-    def LoadInitVariables(self):
+    def LoadInitVariables(self):                                                # Init after await in case is on web
         print(f"Chargement des polices, sons et écran de pause en cours...")
         self.icon = pygame.image.load("img/icon.png")                           # Game icon
         self.icon.set_colorkey((255, 255, 255))                                 # Remove white background

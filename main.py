@@ -7,6 +7,7 @@ print("1. Importations terminées")
 async def start_game():
     print("2. Démarrage de start_game")
     app = Game()
+    await asyncio.sleep(1)                                                      # Wait for BrowserFS to init
     print("3. Objet Game créé, lancement de run...")
     await app.Run()
 
