@@ -49,18 +49,18 @@ class Game:                                                                     
                            "Survive and explore this fantasy world. Grow and develop your abilities to " \
                            "go ever deeper into the adventure!"
         self.music_composer = "The Crew : Mission Deep Sea"
-        print(f"Welcome on {self.game_name} ! ({self.version})\n")           # !! Remove when full on screen
+        print(f"Welcome on {self.game_name} ! ({self.version})\n")              # !! Remove when full on screen
         # Booleans data
-        self.running = True
-        self.menuing = True                                                     # ! [later] Add in the menu
-        self.playing = False                                                    # ! [later] Use when playing (with menu)
-        self.asking_name = True
-        self.play_pausing = False
-        self.music_pausing = False
-        self.muting = False
+        self.running =          True
+        self.menuing =          True                                            # ! [later] Add in the menu
+        self.playing =          False                                           # ! [later] Use when playing (with menu)
+        self.asking_name =      True
+        self.play_pausing =     False
+        self.music_pausing =    False
+        self.muting =           False                                           # For music
         # Icons data
         pygame.display.set_caption(self.game_name)                              # Game name
-        self.icon = pygame.image.load("img/icon.png")                        # Game icon
+        self.icon = pygame.image.load("img/icon.png")                           # Game icon
         self.icon.set_colorkey((255, 255, 255))                                 # Remove white background
         self.icon = pygame.transform.scale(self.icon, (32, 32))
         pygame.display.set_icon(self.icon)                                      # Set icon
@@ -71,9 +71,10 @@ class Game:                                                                     
         self.camera_pos = [0, 0]
         self.fps = 30                                                           # Image per second
         # Screen data
-        is_web = sys.platform == "emscripten"                                   # If on web
-        if is_web:
-            self.screen_size = [1920, 1080]                                     # Web friendly
+        self.is_web = sys.platform == "emscripten"                              # If on browser
+        if self.is_web:
+            # self.screen_size = [1920, 1080]                                     # ! Too big for now
+            self.screen_size = [1280, 720]                                      # Web friendly size
             self.window = pygame.display.set_mode(self.screen_size)             # Display window with chosen size
         else:
             screen_info = pygame.display.Info()
@@ -83,52 +84,55 @@ class Game:                                                                     
         self.title_image = None
         self.background_image = None                                            # ! Modify for unique color by level ?
         # Fonts data
-        self.Fonts = [_ for _ in listdir(f"{self.path}/fonts") if _.endswith(".ttf")]  # Get fonts
-        self.font_name = choice(self.Fonts)                                     # Random font
-        self.giant_font_size = 100
-        self.big_font_size = 50
+        if self.is_web:
+            self.font_name = "Black Bubble.ttf"                                 # Choose one
+        else:
+            self.Fonts = [_ for _ in listdir(f"{self.path}/fonts") if _.endswith(".ttf")]  # Get fonts
+            self.font_name = choice(self.Fonts)                                     # Random font
+        self.giant_font_size =  100
+        self.big_font_size =    50
         self.middle_font_size = 25
-        self.small_font_size = 20
-        self.mini_font_size = 10
-        self.giant_font = pygame.font.Font(f"fonts/{self.font_name}", self.giant_font_size)
-        self.big_font = pygame.font.Font(f"fonts/{self.font_name}", self.big_font_size)
-        self.middle_font = pygame.font.Font(f"fonts/{self.font_name}", self.middle_font_size)
-        self.small_font = pygame.font.Font(f"fonts/{self.font_name}", self.small_font_size)
-        self.mini_font = pygame.font.Font(f"fonts/{self.font_name}", self.mini_font_size)
+        self.small_font_size =  20
+        self.mini_font_size =   10
+        self.giant_font =   pygame.font.Font(f"fonts/{self.font_name}", self.giant_font_size)
+        self.big_font =     pygame.font.Font(f"fonts/{self.font_name}", self.big_font_size)
+        self.middle_font =  pygame.font.Font(f"fonts/{self.font_name}", self.middle_font_size)
+        self.small_font =   pygame.font.Font(f"fonts/{self.font_name}", self.small_font_size)
+        self.mini_font =    pygame.font.Font(f"fonts/{self.font_name}", self.mini_font_size)
         # Colors data
         self.Color_names = ["blue", "green", "cyan", "orange", "red", "pink",
                             "purple", "nightblue", "black", "brown", "yellow", "white"]
         self.Color_value = [(0, 160, 225), (50, 250, 130), (55, 255, 255), (250, 140, 40), (255, 60, 50), (255, 110, 210),
                             (190, 80, 225), (100, 40, 255), (55, 25, 125), (155, 90, 30), (255, 250, 45), (240, 240, 220)]
-        self.color_name_bg = None                                               # Also full music name
-        self.color_bg_start = None
-        self.color_bg_end = None
-        self.color_white = (250, 250, 250)
-        self.color_lightgrey = (200, 200, 200)
-        self.color_grey = (100, 100, 100)
-        self.color_darkgrey = (50, 50, 50)
-        self.color_black = (0, 0, 0)
+        self.color_name_bg =    None                                            # Also full music name
+        self.color_bg_start =   None
+        self.color_bg_end =     None
+        self.color_white =      (250, 250, 250)
+        self.color_lightgrey =  (200, 200, 200)
+        self.color_grey =       (100, 100, 100)
+        self.color_darkgrey =   (50, 50, 50)
+        self.color_black =      (0, 0, 0)
         self.color_transparent = (0, 0, 0, 0)
         # Musics data
         self.music_name = f"musics/subnautica.ogg"
-        self.music_pos = 0
+        self.music_pos =    0
         self.music_lenght = 0
-        self.play_mode = -1
-        self.sound_min = 0
-        self.sound_max = 1
+        self.play_mode =    -1
+        self.sound_min =    0
+        self.sound_max =    1
         self.current_sound = round(self.sound_max / 2, 2)
         self.old_sound = self.current_sound
         self.sound_gap = round(self.sound_max / 20, 2)
         self.sound_bar_height_percent = 0.15                                    # In percent
         self.sound_bar_width = 5                                                # In pixels
         # Sounds data
-        self.bg_sound = pygame.mixer.Sound(f"sounds/deep_bubbles.ogg")
+        self.bg_sound =             pygame.mixer.Sound(f"sounds/deep_bubbles.ogg")
         self.bg_sound.set_volume(0.1)
-        self.bubbling_sound = pygame.mixer.Sound(f"sounds/bubbling.ogg")
+        self.bubbling_sound =       pygame.mixer.Sound(f"sounds/bubbling.ogg")
         self.bubbling_sound.set_volume(0.2)
-        self.low_bubbling_sound = pygame.mixer.Sound(f"sounds/low_bubbling.ogg")
+        self.low_bubbling_sound =   pygame.mixer.Sound(f"sounds/low_bubbling.ogg")
         self.low_bubbling_sound.set_volume(0.3)
-        self.wrong_pseudo_sound = pygame.mixer.Sound(f"sounds/wrong_pseudo.ogg")
+        self.wrong_pseudo_sound =   pygame.mixer.Sound(f"sounds/wrong_pseudo.ogg")
         self.wrong_pseudo_sound.set_volume(0.5)
         # Timers data
         self.time_playing = time()
@@ -393,7 +397,7 @@ class Game:                                                                     
             if event.key == pygame.K_RETURN:
                 if self.CheckPseudonyme():
                     self.player.setName(self.pseudonyme)
-                    if path.exists(f"saves/{self.player.name}.txt"):
+                    if path.exists(f"saves/{self.player.name}.txt") and not self.is_web:
                         self.LoadGame()
                     self.asking_name = False
                     self.play_pausing = False
@@ -611,7 +615,10 @@ class Game:                                                                     
 
     def MusicManager(self):                                                     # Change music based on card
         if not self.music_pausing:
-            self.music_lenght = pygame.mixer.Sound(self.music_name).get_length()# Get song lenght (in sec)
+            if self.is_web:
+                self.music_lenght = 1000                        # L Long time for now -> will optimize later
+            else:
+                self.music_lenght = pygame.mixer.Sound(self.music_name).get_length()# Get song lenght (in sec)
             if pygame.mixer.music.get_busy():
                 self.music_pos = pygame.mixer.music.get_pos() // 1000
 
@@ -769,7 +776,8 @@ class Game:                                                                     
 
     def CloseGame(self):                                                        # Close the game
         end_playing = time()
-        self.SaveGame()
+        if not self.is_web:
+            self.SaveGame()
         played_time = end_playing - self.time_playing
         if played_time < 60:
             played_time = strftime('%S', gmtime(played_time))
